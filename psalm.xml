@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<psalm
+        checkForThrowsInGlobalScope="true"
+        ensureArrayStringOffsetsExist="true"
+        errorLevel="2"
+        findUnusedPsalmSuppress="true"
+        findUnusedBaselineEntry="true"
+        findUnusedCode="false"
+        sealAllMethods="true"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="app"/>
+        <ignoreFiles>
+            <directory name="docker"/>
+            <directory name="patches"/>
+            <directory name="runtime"/>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <MixedArrayAccess errorLevel="suppress"/>
+        <MixedArrayAssignment errorLevel="suppress"/>
+        <UncaughtThrowInGlobalScope errorLevel="info"/>
+        <StringIncrement errorLevel="info"/>
+    </issueHandlers>
+</psalm>

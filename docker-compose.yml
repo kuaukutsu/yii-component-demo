@@ -1,0 +1,221 @@
+version: '3.9'
+
+x-services-volume:
+  &services-volume
+  - type: bind
+    source: ./runtime/log
+    target: /src/log
+  - type: bind
+    source: ./app
+    target: /src/app
+
+x-default-logging:
+  &default-logging
+  driver: local
+  options:
+    max-size: "1m"
+    max-file: "3"
+
+services:
+  fpm:
+    container_name: yii_component_fpm
+    build:
+      context: docker/php/fpm
+      target: app_devel
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+        WORKDIR: "/src/app"
+    networks:
+      - yii_component
+    depends_on:
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      postgresql:
+        condition: service_started
+      mongo:
+        condition: service_started
+    env_file:
+      - ./docker/environment/base.env
+    volumes: *services-volume
+    logging: *default-logging
+
+  cli:
+    container_name: yii_component_cli
+    profiles: ["cli"]
+    build:
+      context: docker/php/cli
+      target: app_devel
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+        WORKDIR: "/src/app"
+    networks:
+      - yii_component
+    env_file:
+      - ./docker/environment/base.env
+    volumes: *services-volume
+    logging: *default-logging
+
+  consumer:
+    container_name: yii_component_consumer
+    profiles: ["queue"]
+    build:
+      context: docker/php/cli
+      target: app_cli
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+        WORKDIR: "/src/app"
+    networks:
+      - yii_component
+    depends_on:
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      postgresql:
+        condition: service_started
+      mongo:
+        condition: service_started
+    env_file:
+      - ./docker/environment/base.env
+    volumes: *services-volume
+    logging: *default-logging
+
+  consumer-worker-one:
+    container_name: yii_component_worker_one
+    profiles: ["workers"]
+    restart: on-failure
+    build:
+      context: docker/php/cli
+      target: app_worker
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+        WORKDIR: "/src/app"
+    networks:
+      - yii_component
+    depends_on:
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      postgresql:
+        condition: service_started
+      mongo:
+        condition: service_started
+    env_file:
+      - ./docker/environment/base.env
+    volumes: *services-volume
+    logging: *default-logging
+
+  consumer-worker-two:
+    container_name: yii_component_worker_two
+    profiles: ["workers"]
+    restart: on-failure
+    build:
+      context: docker/php/cli
+      target: app_worker
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+        WORKDIR: "/src/app"
+    networks:
+      - yii_component
+    depends_on:
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+      postgresql:
+        condition: service_started
+      mongo:
+        condition: service_started
+    env_file:
+      - ./docker/environment/base.env
+    volumes: *services-volume
+    logging: *default-logging
+
+  redis:
+    container_name: yii_component_redis
+    build:
+      context: docker/redis
+    networks:
+      - yii_component
+    volumes:
+      - ./docker/redis/data:/data
+    logging: *default-logging
+
+  rabbitmq:
+    container_name: yii_component_queue
+    build:
+      context: docker/rabbitmq
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+    ports:
+      - "15672:15672"
+    volumes:
+      - ./docker/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./docker/rabbitmq/log/:/var/log/rabbitmq/
+    networks:
+      - yii_component
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 30s
+      retries: 3
+
+  postgresql:
+    container_name: yii_component_db
+    build:
+      context: docker/database/
+      dockerfile: Dockerfile
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=ats
+      - POSTGRES_USER=hrmessenger
+      - POSTGRES_PASSWORD=hrmessenger
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    networks:
+      - yii_component
+    volumes:
+      - yii_component_database:/var/lib/postgresql/data
+      - ./docker/database/logs:/var/log/postgresql
+    logging: *default-logging
+
+  mongo:
+    container_name: yii_component_mongodb
+    restart: no
+    build:
+      context: docker/mongodb/
+      dockerfile: Dockerfile
+      args:
+        UID: ${USER:-1} # ID:1 daemon, support: linux, mac
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: yiicomponent
+      MONGO_INITDB_ROOT_PASSWORD: yiicomponent
+    networks:
+      - yii_component
+    volumes:
+      - ./docker/mongodb/data/:/data/db
+    logging: *default-logging
+
+  nginx:
+    container_name: yii_component_nginx
+    build:
+      context: docker/nginx
+    depends_on:
+      - fpm
+    ports:
+      - "80:80"
+    networks:
+      - yii_component
+    volumes: *services-volume
+    logging: *default-logging
+
+networks:
+  yii_component:
+
+volumes:
+  yii_component_database:

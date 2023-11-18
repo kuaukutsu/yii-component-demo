@@ -1,0 +1,13 @@
+# yii framework
+/runtime
+/tests/_output/*
+/tests/_support/_generated
+/web/assets
+
+# composer
+/vendor
+auth.json
+
+# application
+/config/bootstrap.php
+/config/*.local.php
