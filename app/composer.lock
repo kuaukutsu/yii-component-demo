@@ -749,12 +749,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kuaukutsu/poc-saga.git",
-                "reference": "2fa87002e7c7f5c8039db5adcc2e5224e65a166c"
+                "reference": "0516c1091296ea2d74ba994723dbe02a0f74fd23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kuaukutsu/poc-saga/zipball/2fa87002e7c7f5c8039db5adcc2e5224e65a166c",
-                "reference": "2fa87002e7c7f5c8039db5adcc2e5224e65a166c",
+                "url": "https://api.github.com/repos/kuaukutsu/poc-saga/zipball/0516c1091296ea2d74ba994723dbe02a0f74fd23",
+                "reference": "0516c1091296ea2d74ba994723dbe02a0f74fd23",
                 "shasum": ""
             },
             "require": {
@@ -807,7 +807,7 @@
                 "issues": "https://github.com/kuaukutsu/poc-saga/issues",
                 "source": "https://github.com/kuaukutsu/poc-saga"
             },
-            "time": "2023-11-17T13:52:27+00:00"
+            "time": "2023-11-19T06:25:33+00:00"
         },
         {
             "name": "kuaukutsu/poc-task",
@@ -815,12 +815,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kuaukutsu/poc-task.git",
-                "reference": "a1fdb00241bd8b8133cdb98a8dce9f6473fdf064"
+                "reference": "0b4dfee9db9bb574584c36c62cf5da91d5c71748"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kuaukutsu/poc-task/zipball/a1fdb00241bd8b8133cdb98a8dce9f6473fdf064",
-                "reference": "a1fdb00241bd8b8133cdb98a8dce9f6473fdf064",
+                "url": "https://api.github.com/repos/kuaukutsu/poc-task/zipball/0b4dfee9db9bb574584c36c62cf5da91d5c71748",
+                "reference": "0b4dfee9db9bb574584c36c62cf5da91d5c71748",
                 "shasum": ""
             },
             "require": {
@@ -882,7 +882,7 @@
                 "issues": "https://github.com/kuaukutsu/poc-task/issues",
                 "source": "https://github.com/kuaukutsu/poc-task"
             },
-            "time": "2023-11-18T05:57:33+00:00"
+            "time": "2023-11-19T11:13:52+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -5511,16 +5511,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.24.2",
+            "version": "1.24.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "bcad8d995980440892759db0c32acae7c8e79442"
+                "reference": "12f01d214f1c73b9c91fdb3b1c415e4c70652083"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/bcad8d995980440892759db0c32acae7c8e79442",
-                "reference": "bcad8d995980440892759db0c32acae7c8e79442",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/12f01d214f1c73b9c91fdb3b1c415e4c70652083",
+                "reference": "12f01d214f1c73b9c91fdb3b1c415e4c70652083",
                 "shasum": ""
             },
             "require": {
@@ -5552,9 +5552,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.2"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.24.3"
             },
-            "time": "2023-09-26T12:28:12+00:00"
+            "time": "2023-11-18T20:15:32+00:00"
         },
         {
             "name": "phpstan/phpstan",

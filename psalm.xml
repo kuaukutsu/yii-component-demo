@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
+<!--suppress XmlPathReference -->
 <psalm
         checkForThrowsInGlobalScope="true"
         ensureArrayStringOffsetsExist="true"
-        errorLevel="2"
+        errorLevel="1"
         findUnusedPsalmSuppress="true"
         findUnusedBaselineEntry="true"
         findUnusedCode="false"
@@ -14,17 +15,29 @@
     <projectFiles>
         <directory name="app"/>
         <ignoreFiles>
-            <directory name="docker"/>
-            <directory name="patches"/>
-            <directory name="runtime"/>
-            <directory name="vendor"/>
+            <directory name="app/config"/>
+            <directory name="app/main"/>
+            <directory name="app/tests"/>
+            <directory name="app/runtime"/>
+            <directory name="app/vendor"/>
+            <directory name="app/web"/>
         </ignoreFiles>
     </projectFiles>
+
+    <stubs>
+        <file name="app/config/bootstrap.php" preloadClasses="true" />
+    </stubs>
 
     <issueHandlers>
         <MixedArrayAccess errorLevel="suppress"/>
         <MixedArrayAssignment errorLevel="suppress"/>
         <UncaughtThrowInGlobalScope errorLevel="info"/>
         <StringIncrement errorLevel="info"/>
+
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Yii" />
+            </errorLevel>
+        </UndefinedClass>
     </issueHandlers>
 </psalm>

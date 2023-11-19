@@ -26,6 +26,11 @@ queue:
 		-e XDEBUG_MODE=off \
  		consumer php yii queue-pool/listen -v --consumer=2
 
+cron:
+	docker-compose -f ./docker-compose.yml run --rm -u ${USER} -w /src/app \
+		-e XDEBUG_MODE=off \
+ 		cli php main/cron.php
+
 app-nginx-build:
 	USER=${USER} docker-compose -f ./docker-compose.yml build nginx
 
@@ -86,30 +91,30 @@ composer-dump:
 		cli composer dump-autoload --ignore-platform-req=ext-pcntl
 
 psalm:
-	docker run --init -it --rm -v "$$(pwd):/src" -w /src/app \
+	docker run --init -it --rm -v "$$(pwd):/src" -w /src \
  		-e XDG_CACHE_HOME=/tmp \
 		ghcr.io/kuaukutsu/php:${PHP_VERSION}-cli \
-		./vendor/bin/psalm
+		./app/vendor/bin/psalm
 
 phpunit:
-	docker run --init -it --rm -v "$$(pwd):/app" -u ${USER} -w /src/app \
+	docker run --init -it --rm -v "$$(pwd):/src" -u ${USER} -w /src \
 		ghcr.io/kuaukutsu/php:${PHP_VERSION}-cli \
-		./vendor/bin/phpunit
+		./app/vendor/bin/phpunit
 
 phpcs:
-	docker run --init -it --rm -v "$$(pwd):/app" -u ${USER} -w /src/app \
+	docker run --init -it --rm -v "$$(pwd):/src" -u ${USER} -w /src \
 		ghcr.io/kuaukutsu/php:${PHP_VERSION}-cli \
-		./vendor/bin/phpcs
+		./app/vendor/bin/phpcs
 
 phpcbf:
-	docker run --init -it --rm -v "$$(pwd):/app" -u ${USER} -w /src/app \
+	docker run --init -it --rm -v "$$(pwd):/src" -u ${USER} -w /src \
 		ghcr.io/kuaukutsu/php:${PHP_VERSION}-cli \
-		./vendor/bin/phpcbf
+		./app/vendor/bin/phpcbf
 
 rector:
-	docker run --init -it --rm -v "$$(pwd):/app" -u ${USER} -w /src/app \
+	docker run --init -it --rm -v "$$(pwd):/src" -u ${USER} -w /src \
 		ghcr.io/kuaukutsu/php:${PHP_VERSION}-cli \
-		./vendor/bin/rector
+		./app/vendor/bin/rector
 
 waiting:
 	sleep 10

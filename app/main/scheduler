@@ -11,11 +11,11 @@ declare(strict_types=1);
  * @license http://www.yiiframework.com/license/
  */
 
-require __DIR__ . '/vendor/autoload.php';
-require __DIR__ . '/config/bootstrap.php';
-require __DIR__ . '/vendor/yiisoft/yii2/Yii.php';
+require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../config/bootstrap.php';
+require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
 
-$config = require __DIR__ . '/config/console.php';
+$config = require __DIR__ . '/../config/console.scheduler.php';
 
 /** @noinspection PhpUnhandledExceptionInspection */
 $application = new yii\console\Application($config);

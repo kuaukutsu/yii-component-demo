@@ -10,8 +10,14 @@ use Rector\Set\ValueObject\SetList;
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths(
         [
-            __DIR__ . '/src',
-            __DIR__ . '/tests',
+            __DIR__ . '/app',
+            __DIR__ . '/app/tests',
+        ]
+    );
+
+    $rectorConfig->skip(
+        [
+            __DIR__ . '/app/vendor'
         ]
     );
 
