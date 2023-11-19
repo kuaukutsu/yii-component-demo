@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use yii\rbac\DbManager;
 use yii\redis\Cache;
 use yii\web\User;
 
@@ -29,6 +30,10 @@ return [
             'class' => User::class,
             'autoRenewCookie' => false,
             'enableSession' => false,
+        ],
+        'authManager' => [
+            'class' => DbManager::class,
+            'cache' => 'cache',
         ],
         'formatter' => [
             'defaultTimeZone' => 'UTC',

@@ -42,6 +42,7 @@ final class AppBuild
         $this->mergeContainerWithLocal($this->config);
         $this->mergeModules($this->config);
         $this->mergeComponentsStorage($this->config);
+        $this->mergeComponentsRedis($this->config);
         $this->mergeParams($this->config);
 
         return $this->config;
@@ -156,6 +157,24 @@ final class AppBuild
                 (array)require $this->dirConfig . '/storage.local.php'
             );
         }
+
+        /**
+         * Переписываем только если не определено глобально в конфиге
+         */
+        array_walk($storage, static function (array $value, string $key) use (&$config) {
+            if (isset($config['components'][$key]) === false) {
+                $config['components'][$key] = $value;
+            }
+        });
+    }
+
+    /**
+     * @param array $config rewrite
+     */
+    private function mergeComponentsRedis(array &$config): void
+    {
+        $storage = (array)require $this->dirConfig
+            . ($this->isRunTests() ? '/redis.tests.php' : '/redis.php');
 
         /**
          * Переписываем только если не определено глобально в конфиге

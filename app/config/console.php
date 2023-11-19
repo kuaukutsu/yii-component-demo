@@ -29,6 +29,7 @@ $config = [
             'class' => MigrateController::class,
             'migrationPath' => [
                 '@yii/rbac/migrations',
+                '@app/modules/command/migrations',
             ],
         ],
     ],

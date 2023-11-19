@@ -12,8 +12,7 @@ stop:
 	docker-compose -f ./docker-compose.yml --profile workers stop
 
 down:
-	docker-compose -f ./docker-compose.yml down --remove-orphans \
-	&& find ./runtime/log ! -name '.gitignore' -type f -exec rm -f {}
+	docker-compose -f ./docker-compose.yml down --remove-orphans
 
 ps:
 	docker-compose -f ./docker-compose.yml ps

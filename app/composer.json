@@ -84,7 +84,7 @@
       "kuaukutsu\\poc\\demo\\": ""
     },
     "files": [
-      "tools/functions.php"
+      "functions.php"
     ]
   },
   "autoload-dev": {

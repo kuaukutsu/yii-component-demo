@@ -173,9 +173,9 @@ services:
     ports:
       - "5433:5432"
     environment:
-      - POSTGRES_DB=ats
-      - POSTGRES_USER=hrmessenger
-      - POSTGRES_PASSWORD=hrmessenger
+      - POSTGRES_DB=main
+      - POSTGRES_USER=yiicomponent
+      - POSTGRES_PASSWORD=yiicomponent
       - PGDATA=/var/lib/postgresql/data/pgdata
     networks:
       - yii_component
