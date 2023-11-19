@@ -32,6 +32,7 @@
     "kuaukutsu/ds-dto": "^2.0",
     "yiisoft/arrays": "^3.0",
     "yiisoft/strings": "^2.1",
+    "yiisoft/validator": "^1.0",
     "yiisoft/yii2": "^2.0.49",
     "yiisoft/yii2-queue": "^2.3",
     "yiisoft/yii2-mongodb": "^3.0",

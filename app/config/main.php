@@ -5,6 +5,7 @@ declare(strict_types=1);
 use yii\rbac\DbManager;
 use yii\redis\Cache;
 use yii\web\User;
+use kuaukutsu\poc\demo\components\identity\DomainRoleEnum;
 
 return [
     'name' => 'main',
@@ -34,6 +35,10 @@ return [
         'authManager' => [
             'class' => DbManager::class,
             'cache' => 'cache',
+            'defaultRoles' => [
+                DomainRoleEnum::GUEST->value,
+                DomainRoleEnum::USER->value,
+            ],
         ],
         'formatter' => [
             'defaultTimeZone' => 'UTC',

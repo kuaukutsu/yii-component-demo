@@ -48,6 +48,16 @@ final class m231119_135255_saga_test extends Migration
                     ->defaultExpression('CURRENT_TIMESTAMP'),
             ]
         );
+
+        $tableName = trim($this->getDb()->quoteSql($this->table), '"');
+
+        $this->addPrimaryKey(
+            'PK_' . $tableName . '_uuid',
+            $this->table,
+            [
+                'uuid',
+            ]
+        );
     }
 
     /**

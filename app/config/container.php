@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Ramsey\Uuid\UuidFactory;
+use Ramsey\Uuid\UuidFactoryInterface;
 use yii\caching\CacheInterface;
 use yii\di\Container;
 use yii\mail\MailerInterface;
@@ -17,6 +19,14 @@ $container = [
         ManagerInterface::class => static fn() => Yii::$app->getAuthManager(),
         MailerInterface::class => static fn() => Yii::$app->getMailer(),
         SecurityInterface::class => SecurityDecorator::class,
+    ],
+    'definitions' => [
+        UuidFactoryInterface::class => UuidFactory::class,
+        \DI\Container::class => new \DI\Container(
+            [
+                UuidFactoryInterface::class => \DI\create(UuidFactory::class),
+            ]
+        ),
     ],
 ];
 
