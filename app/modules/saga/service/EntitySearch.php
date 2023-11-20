@@ -17,7 +17,7 @@ final class EntitySearch
     public function getOne(string $uuid): EntityDto
     {
         $model = Entity::findOne($uuid)
-            ?? throw new NotFoundException("[$uuid] Saga not found.");
+            ?? throw new NotFoundException("[$uuid] Entity not found.");
 
         return $model->toDto();
     }

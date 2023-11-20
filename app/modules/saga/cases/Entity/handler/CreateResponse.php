@@ -9,12 +9,12 @@ use kuaukutsu\poc\demo\components\bridge\BridgeResponse;
 use kuaukutsu\poc\demo\shared\exception\ModelSaveException;
 use kuaukutsu\poc\demo\shared\exception\NotImplementedException;
 use kuaukutsu\poc\demo\shared\request\Saga\EntityCreateRequest;
-use kuaukutsu\poc\demo\modules\saga\cases\Entity\service\EntityCreator;
+use kuaukutsu\poc\demo\modules\saga\cases\Entity\service\EntityDomainCreator;
 use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
 
 final class CreateResponse implements BridgeResponse
 {
-    public function __construct(private readonly EntityCreator $service)
+    public function __construct(private readonly EntityDomainCreator $service)
     {
     }
 

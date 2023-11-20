@@ -11,11 +11,11 @@ use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidUpdate;
 use kuaukutsu\poc\demo\shared\exception\ModelDeleteException;
 use kuaukutsu\poc\demo\shared\exception\ModelSaveException;
 use kuaukutsu\poc\demo\shared\exception\NotFoundException;
-use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
-use kuaukutsu\poc\demo\modules\saga\models\EntityModel;
-use kuaukutsu\poc\demo\modules\saga\models\Entity;
+use kuaukutsu\poc\demo\modules\saga\models\TagDto;
+use kuaukutsu\poc\demo\modules\saga\models\TagModel;
+use kuaukutsu\poc\demo\modules\saga\models\Tag;
 
-final class EntityService
+final class TagService
 {
     use ModelOperationSafely;
 
@@ -23,7 +23,7 @@ final class EntityService
      * @param non-empty-string $uuid
      * @throws ModelSaveException
      */
-    public function create(string $uuid, EntityModel $dto): EntityDto
+    public function create(string $uuid, TagModel $dto): TagDto
     {
         return $this->save(
             new PrimaryUuidCreate($uuid),
@@ -36,7 +36,7 @@ final class EntityService
      * @throws NotFoundException
      * @throws ModelSaveException
      */
-    public function update(string $uuid, EntityModel $dto): EntityDto
+    public function update(string $uuid, TagModel $dto): TagDto
     {
         return $this->save(
             new PrimaryUuidUpdate($uuid),
@@ -61,10 +61,10 @@ final class EntityService
      * @throws NotFoundException
      * @throws ModelSaveException
      */
-    private function save(PrimaryKeyInterface $pk, array $attributes): EntityDto
+    private function save(PrimaryKeyInterface $pk, array $attributes): TagDto
     {
         $model = $pk->isNewRecord()
-            ? new Entity($pk->getValue())
+            ? new Tag($pk->getValue())
             : $this->getOne($pk);
 
         $model->setAttributes($attributes);
@@ -77,11 +77,11 @@ final class EntityService
     /**
      * @throws NotFoundException
      */
-    private function getOne(PrimaryKeyInterface $pk): Entity
+    private function getOne(PrimaryKeyInterface $pk): Tag
     {
-        return Entity::findOne($pk->getValue())
+        return Tag::findOne($pk->getValue())
             ?? throw new NotFoundException(
-                strtr('[uuid] Entity not found.', $pk->getValue())
+                strtr('[uuid] Tag not found.', $pk->getValue())
             );
     }
 }

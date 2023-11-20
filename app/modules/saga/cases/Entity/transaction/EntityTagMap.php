@@ -5,50 +5,42 @@ declare(strict_types=1);
 namespace kuaukutsu\poc\demo\modules\saga\cases\Entity\transaction;
 
 use kuaukutsu\poc\saga\TransactionStepBase;
-use kuaukutsu\poc\demo\modules\saga\service\EntityService;
-use kuaukutsu\poc\demo\modules\saga\models\EntityModel;
+use kuaukutsu\poc\demo\components\identity\DomainIdentity;
+use kuaukutsu\poc\demo\modules\saga\cases\Entity\service\EntityCreator;
 use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
 
 final class EntityTagMap extends TransactionStepBase
 {
+    /**
+     * @param non-empty-string[] $tags
+     */
     public function __construct(
-        private readonly EntityService $service,
+        public readonly DomainIdentity $identity,
+        public readonly array $tags,
+        private readonly EntityCreator $service,
     ) {
     }
 
     public function commit(): bool
     {
-        $this->service->update(
-            $this->current()->uuid,
-            EntityModel::hydrate(
-                [
-                    'comment' => 'modify',
-                    'flag' => true,
-                ]
-            )
-        );
+        $entity = $this->getEntity();
+        foreach ($this->tags as $tag) {
+            $this->service->attachTag(
+                $this->identity,
+                $entity,
+                $tag,
+            );
+        }
 
         return true;
     }
 
     public function rollback(): bool
     {
-        $model = $this->current();
-
-        $this->service->update(
-            $model->uuid,
-            EntityModel::hydrate(
-                [
-                    'comment' => $model->comment,
-                    'flag' => false,
-                ]
-            )
-        );
-
         return true;
     }
 
-    private function current(): EntityDto
+    private function getEntity(): EntityDto
     {
         /**
          * @var EntityDto

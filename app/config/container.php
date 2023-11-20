@@ -18,15 +18,18 @@ $container = [
         CacheInterface::class => static fn() => Yii::$app->getCache(),
         ManagerInterface::class => static fn() => Yii::$app->getAuthManager(),
         MailerInterface::class => static fn() => Yii::$app->getMailer(),
-        SecurityInterface::class => SecurityDecorator::class,
-    ],
-    'definitions' => [
-        UuidFactoryInterface::class => UuidFactory::class,
+        // container
         \DI\Container::class => new \DI\Container(
             [
+                SecurityInterface::class => \DI\create(SecurityDecorator::class),
                 UuidFactoryInterface::class => \DI\create(UuidFactory::class),
             ]
         ),
+    ],
+    'definitions' => [
+        SecurityInterface::class => SecurityDecorator::class,
+        UuidFactoryInterface::class => UuidFactory::class,
+
     ],
 ];
 

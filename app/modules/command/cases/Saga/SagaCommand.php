@@ -23,12 +23,22 @@ final class SagaCommand extends ConsoleCommand
         parent::__construct($id, $module, $config);
     }
 
-    public function actionTest(): int
+    public function actionTest(string $comment): int
     {
         /** @var DtoInterface $response */
         $response = $this->bridge
             ->run(
-                new EntityCreateRequest(new GuestIdentity(), 'console command')
+                new EntityCreateRequest(
+                    new GuestIdentity(),
+                    [
+                        'comment' => $comment,
+                    ],
+                    [
+                        'php',
+                        'console',
+                        'test',
+                    ]
+                )
             );
 
         if ($this->verbose) {

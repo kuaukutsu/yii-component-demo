@@ -11,9 +11,9 @@ use yii\db\Migration;
  * @psalm-suppress PropertyNotSetInConstructor
  */
 // @phpcs:ignore
-final class m231119_135255_saga_entity extends Migration
+final class m231120_103439_create_saga_tag extends Migration
 {
-    private string $table = '{{%saga_entity}}';
+    private string $table = '{{%saga_tag}}';
 
     public function init(): void
     {
@@ -34,16 +34,10 @@ final class m231119_135255_saga_entity extends Migration
                 'uuid' => $this->getDb()->getSchema()
                     ->createColumnSchemaBuilder('uuid')
                     ->notNull(),
-                'comment' => $this->string(1024)
+                'name' => $this->string(256)
                     ->notNull()
-                    ->comment('Комментаий'),
-                'is_deleted' => $this->boolean()
-                    ->defaultValue(false)
-                    ->comment('true: commit, false: rollback'),
+                    ->comment('Наименование'),
                 'created_at' => $this->timestamp()
-                    ->notNull()
-                    ->defaultExpression('CURRENT_TIMESTAMP'),
-                'updated_at' => $this->timestamp()
                     ->notNull()
                     ->defaultExpression('CURRENT_TIMESTAMP'),
             ]

@@ -10,6 +10,10 @@ use kuaukutsu\poc\demo\modules\saga\cases\Entity\handler\CreateResponse;
 
 final class EntityCreateRequest implements BridgeRequest
 {
+    /**
+     * @param array<string, string> $entityData
+     * @param non-empty-string[] $tags
+     */
     public function __construct(
         public readonly DomainIdentity $identity,
         public readonly array $entityData,

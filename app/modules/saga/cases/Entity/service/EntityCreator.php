@@ -4,32 +4,47 @@ declare(strict_types=1);
 
 namespace kuaukutsu\poc\demo\modules\saga\cases\Entity\service;
 
-use kuaukutsu\poc\saga\TransactionRunner;
 use kuaukutsu\poc\demo\components\identity\DomainIdentity;
-use kuaukutsu\poc\demo\shared\exception\ModelDeleteException;
-use kuaukutsu\poc\demo\modules\saga\cases\Entity\transaction\EntityCreate;
-use kuaukutsu\poc\demo\modules\saga\cases\Entity\transaction\CreateTransaction;
+use kuaukutsu\poc\demo\shared\exception\ModelSaveException;
+use kuaukutsu\poc\demo\shared\exception\NotFoundException;
+use kuaukutsu\poc\demo\shared\entity\UuidFactory;
+use kuaukutsu\poc\demo\modules\saga\service\EntityService;
+use kuaukutsu\poc\demo\modules\saga\service\EntityTagMapService;
+use kuaukutsu\poc\demo\modules\saga\service\TagSearch;
+use kuaukutsu\poc\demo\modules\saga\models\EntityModel;
 use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
 
 final class EntityCreator
 {
     public function __construct(
-        private readonly TransactionRunner $transaction,
+        private readonly EntityService $service,
+        private readonly TagSearch $tagSearch,
+        private readonly EntityTagMapService $mapService,
+        private readonly UuidFactory $uuidFactory,
     ) {
     }
 
     /**
-     * @throws ModelDeleteException
+     * @throws ModelSaveException
      */
-    public function create(DomainIdentity $identity, array $entityData, array $tags): EntityDto
+    public function create(DomainIdentity $identity, EntityModel $model): EntityDto
     {
-        $transaction = $this->transaction->run(
-            new CreateTransaction($entityData, $tags)
+        return $this->service->create(
+            $this->uuidFactory->createUuid7(),
+            $model
         );
+    }
 
-        /**
-         * @var EntityDto
-         */
-        return $transaction->state->getData(EntityCreate::class);
+    /**
+     * @param non-empty-string $tagName
+     * @throws NotFoundException
+     * @throws ModelSaveException
+     */
+    public function attachTag(DomainIdentity $identity, EntityDto $entity, string $tagName): void
+    {
+        $this->mapService->create(
+            $entity,
+            $this->tagSearch->getOneByName($tagName)
+        );
     }
 }
