@@ -8,6 +8,7 @@ use kuaukutsu\poc\saga\TransactionStepBase;
 use kuaukutsu\poc\demo\components\identity\DomainIdentity;
 use kuaukutsu\poc\demo\modules\saga\models\TagModel;
 use kuaukutsu\poc\demo\modules\saga\cases\Tag\exception\TagExistsException;
+use kuaukutsu\poc\demo\modules\saga\cases\Tag\service\TagDestroyer;
 use kuaukutsu\poc\demo\modules\saga\cases\Tag\service\TagCreator;
 
 final class TagCreate extends TransactionStepBase
@@ -19,11 +20,13 @@ final class TagCreate extends TransactionStepBase
         public readonly DomainIdentity $identity,
         public readonly array $tags,
         private readonly TagCreator $service,
+        private readonly TagDestroyer $destroyer,
     ) {
     }
 
     public function commit(): bool
     {
+        $tagsCreated = [];
         foreach ($this->tags as $tag) {
             try {
                 $this->service->create(
@@ -35,14 +38,34 @@ final class TagCreate extends TransactionStepBase
                     )
                 );
             } catch (TagExistsException) {
+                continue;
             }
+
+            $tagsCreated[] = $tag;
         }
+
+        $this->save(
+            new TagCreated($tagsCreated)
+        );
 
         return true;
     }
 
     public function rollback(): bool
     {
+        foreach ($this->current()->tags as $tag) {
+            $this->destroyer->removeByName($tag);
+        }
+
         return true;
+    }
+
+
+    private function current(): TagCreated
+    {
+        /**
+         * @var TagCreated
+         */
+        return $this->get(self::class);
     }
 }

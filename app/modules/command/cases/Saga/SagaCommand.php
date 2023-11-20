@@ -37,6 +37,8 @@ final class SagaCommand extends ConsoleCommand
                         'php',
                         'console',
                         'test',
+                        'example',
+                        'commit',
                     ]
                 )
             );

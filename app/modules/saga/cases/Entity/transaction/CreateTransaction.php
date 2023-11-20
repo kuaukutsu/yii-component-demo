@@ -12,7 +12,7 @@ use kuaukutsu\poc\demo\components\identity\DomainIdentity;
 final class CreateTransaction implements TransactionInterface
 {
     /**
-     * @param array<string, string> $entityData
+     * @param array<string, scalar> $entityData
      * @param non-empty-string[] $tags
      */
     public function __construct(
