@@ -6,13 +6,14 @@ namespace kuaukutsu\poc\demo\shared\request\Saga;
 
 use kuaukutsu\poc\demo\components\bridge\BridgeRequest;
 use kuaukutsu\poc\demo\components\identity\DomainIdentity;
-use kuaukutsu\poc\demo\modules\saga\cases\Simple\handler\CreateResponse;
+use kuaukutsu\poc\demo\modules\saga\cases\Entity\handler\CreateResponse;
 
-final class SagaSimpleRequest implements BridgeRequest
+final class EntityCreateRequest implements BridgeRequest
 {
     public function __construct(
         public readonly DomainIdentity $identity,
-        public readonly string $comment,
+        public readonly array $entityData,
+        public readonly array $tags = [],
     ) {
     }
 

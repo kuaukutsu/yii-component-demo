@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace kuaukutsu\poc\demo\modules\saga\cases\Simple\transaction;
+namespace kuaukutsu\poc\demo\modules\saga\cases\Entity\transaction;
 
 use kuaukutsu\poc\saga\TransactionStepBase;
 use kuaukutsu\poc\demo\shared\entity\UuidFactory;
-use kuaukutsu\poc\demo\modules\saga\service\SagaService;
-use kuaukutsu\poc\demo\modules\saga\models\SagaModel;
-use kuaukutsu\poc\demo\modules\saga\models\SagaDto;
+use kuaukutsu\poc\demo\modules\saga\service\EntityService;
+use kuaukutsu\poc\demo\modules\saga\models\EntityModel;
+use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
 
-final class SagaCreate extends TransactionStepBase
+final class EntityCreate extends TransactionStepBase
 {
     public function __construct(
-        private readonly string $comment,
-        private readonly SagaService $service,
+        private readonly array $data,
+        private readonly EntityService $service,
         private readonly UuidFactory $uuidFactory,
     ) {
     }
@@ -24,12 +24,7 @@ final class SagaCreate extends TransactionStepBase
         $this->save(
             $this->service->create(
                 $this->uuidFactory->createUuid7(),
-                SagaModel::hydrate(
-                    [
-                        'comment' => $this->comment,
-                        'flag' => true,
-                    ]
-                )
+                EntityModel::hydrate($this->data)
             )
         );
 
@@ -40,7 +35,7 @@ final class SagaCreate extends TransactionStepBase
     {
         $this->service->update(
             $this->current()->uuid,
-            SagaModel::hydrate(
+            EntityModel::hydrate(
                 [
                     'flag' => false,
                 ]
@@ -50,10 +45,10 @@ final class SagaCreate extends TransactionStepBase
         return true;
     }
 
-    private function current(): SagaDto
+    private function current(): EntityDto
     {
         /**
-         * @var SagaDto
+         * @var EntityDto
          */
         return $this->get(self::class);
     }

@@ -9,7 +9,7 @@ use yii\console\ExitCode;
 use kuaukutsu\ds\dto\DtoInterface;
 use kuaukutsu\poc\demo\components\identity\GuestIdentity;
 use kuaukutsu\poc\demo\components\bridge\BridgeRunnable;
-use kuaukutsu\poc\demo\shared\request\Saga\SagaSimpleRequest;
+use kuaukutsu\poc\demo\shared\request\Saga\EntityCreateRequest;
 use kuaukutsu\poc\demo\modules\command\components\controller\ConsoleCommand;
 
 final class SagaCommand extends ConsoleCommand
@@ -28,7 +28,7 @@ final class SagaCommand extends ConsoleCommand
         /** @var DtoInterface $response */
         $response = $this->bridge
             ->run(
-                new SagaSimpleRequest(new GuestIdentity(), 'console command')
+                new EntityCreateRequest(new GuestIdentity(), 'console command')
             );
 
         if ($this->verbose) {

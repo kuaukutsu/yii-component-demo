@@ -11,11 +11,11 @@ use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidUpdate;
 use kuaukutsu\poc\demo\shared\exception\ModelDeleteException;
 use kuaukutsu\poc\demo\shared\exception\ModelSaveException;
 use kuaukutsu\poc\demo\shared\exception\NotFoundException;
-use kuaukutsu\poc\demo\modules\saga\models\SagaDto;
-use kuaukutsu\poc\demo\modules\saga\models\SagaModel;
-use kuaukutsu\poc\demo\modules\saga\models\Saga;
+use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
+use kuaukutsu\poc\demo\modules\saga\models\EntityModel;
+use kuaukutsu\poc\demo\modules\saga\models\Entity;
 
-final class SagaService
+final class EntityService
 {
     use ModelOperationSafely;
 
@@ -23,7 +23,7 @@ final class SagaService
      * @param non-empty-string $uuid
      * @throws ModelSaveException
      */
-    public function create(string $uuid, SagaModel $dto): SagaDto
+    public function create(string $uuid, EntityModel $dto): EntityDto
     {
         return $this->save(
             new PrimaryUuidCreate($uuid),
@@ -36,7 +36,7 @@ final class SagaService
      * @throws NotFoundException
      * @throws ModelSaveException
      */
-    public function update(string $uuid, SagaModel $dto): SagaDto
+    public function update(string $uuid, EntityModel $dto): EntityDto
     {
         return $this->save(
             new PrimaryUuidUpdate($uuid),
@@ -60,10 +60,10 @@ final class SagaService
      * @throws NotFoundException
      * @throws ModelSaveException
      */
-    private function save(PrimaryKeyInterface $pk, array $attributes): SagaDto
+    private function save(PrimaryKeyInterface $pk, array $attributes): EntityDto
     {
         $model = $pk->isNewRecord()
-            ? new Saga($pk->getValue())
+            ? new Entity($pk->getValue())
             : $this->getOne($pk);
 
         $model->setAttributes($attributes);
@@ -76,9 +76,9 @@ final class SagaService
     /**
      * @throws NotFoundException
      */
-    private function getOne(PrimaryKeyInterface $pk): Saga
+    private function getOne(PrimaryKeyInterface $pk): Entity
     {
-        return Saga::findOne($pk->getValue())
+        return Entity::findOne($pk->getValue())
             ?? throw new NotFoundException(
                 strtr('[uuid] Saga not found.', $pk->getValue())
             );

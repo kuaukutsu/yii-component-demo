@@ -11,9 +11,9 @@ use yii\db\Migration;
  * @psalm-suppress PropertyNotSetInConstructor
  */
 // @phpcs:ignore
-final class m231119_135255_saga_test extends Migration
+final class m231119_135255_saga_entity extends Migration
 {
-    private string $table = '{{%saga_test}}';
+    private string $table = '{{%saga_entity}}';
 
     public function init(): void
     {
@@ -37,7 +37,7 @@ final class m231119_135255_saga_test extends Migration
                 'comment' => $this->string(1024)
                     ->notNull()
                     ->comment('Комментаий'),
-                'flag' => $this->boolean()
+                'is_deleted' => $this->boolean()
                     ->defaultValue(false)
                     ->comment('true: commit, false: rollback'),
                 'created_at' => $this->timestamp()

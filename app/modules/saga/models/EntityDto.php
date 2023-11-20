@@ -11,7 +11,7 @@ use kuaukutsu\poc\saga\TransactionDataInterface;
  * @psalm-immutable
  * @psalm-suppress MissingConstructor
  */
-final class SagaDto extends DtoBase implements TransactionDataInterface
+final class EntityDto extends DtoBase implements TransactionDataInterface
 {
     /**
      * @var non-empty-string
@@ -23,7 +23,7 @@ final class SagaDto extends DtoBase implements TransactionDataInterface
      */
     public string $comment;
 
-    public bool $flag;
+    public bool $isDeleted;
 
     /**
      * @var non-empty-string

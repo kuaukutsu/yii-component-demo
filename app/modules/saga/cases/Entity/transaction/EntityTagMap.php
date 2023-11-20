@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace kuaukutsu\poc\demo\modules\saga\cases\Simple\transaction;
+namespace kuaukutsu\poc\demo\modules\saga\cases\Entity\transaction;
 
 use kuaukutsu\poc\saga\TransactionStepBase;
-use kuaukutsu\poc\demo\modules\saga\service\SagaService;
-use kuaukutsu\poc\demo\modules\saga\models\SagaModel;
-use kuaukutsu\poc\demo\modules\saga\models\SagaDto;
+use kuaukutsu\poc\demo\modules\saga\service\EntityService;
+use kuaukutsu\poc\demo\modules\saga\models\EntityModel;
+use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
 
-final class SagaModify extends TransactionStepBase
+final class EntityTagMap extends TransactionStepBase
 {
     public function __construct(
-        private readonly SagaService $service,
+        private readonly EntityService $service,
     ) {
     }
 
@@ -20,7 +20,7 @@ final class SagaModify extends TransactionStepBase
     {
         $this->service->update(
             $this->current()->uuid,
-            SagaModel::hydrate(
+            EntityModel::hydrate(
                 [
                     'comment' => 'modify',
                     'flag' => true,
@@ -37,7 +37,7 @@ final class SagaModify extends TransactionStepBase
 
         $this->service->update(
             $model->uuid,
-            SagaModel::hydrate(
+            EntityModel::hydrate(
                 [
                     'comment' => $model->comment,
                     'flag' => false,
@@ -48,11 +48,11 @@ final class SagaModify extends TransactionStepBase
         return true;
     }
 
-    private function current(): SagaDto
+    private function current(): EntityDto
     {
         /**
-         * @var SagaDto
+         * @var EntityDto
          */
-        return $this->get(SagaCreate::class);
+        return $this->get(EntityCreate::class);
     }
 }
