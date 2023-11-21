@@ -53,7 +53,7 @@ final class TagCreate extends TransactionStepBase
 
     public function rollback(): bool
     {
-        foreach ($this->current()->tags as $tag) {
+        foreach ($this->getSavedModel()->tags as $tag) {
             $this->destroyer->removeByName($tag);
         }
 
@@ -61,11 +61,11 @@ final class TagCreate extends TransactionStepBase
     }
 
 
-    private function current(): TagCreated
+    private function getSavedModel(): TagCreate
     {
         /**
-         * @var TagCreated
+         * @var TagCreate
          */
-        return $this->get(self::class);
+        return $this->current();
     }
 }

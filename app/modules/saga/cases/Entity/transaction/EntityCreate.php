@@ -39,17 +39,17 @@ final class EntityCreate extends TransactionStepBase
     public function rollback(): bool
     {
         $this->destroyer->remove(
-            $this->current()->uuid
+            $this->getSavedModel()->uuid
         );
 
         return true;
     }
 
-    private function current(): EntityDto
+    private function getSavedModel(): EntityDto
     {
         /**
          * @var EntityDto
          */
-        return $this->get(self::class);
+        return $this->current();
     }
 }

@@ -30,6 +30,6 @@ final class EntityDomainCreator
         /**
          * @var EntityDto
          */
-        return $transaction->state->getData(EntityDto::class);
+        return $transaction->state->get(EntityDto::class);
     }
 }

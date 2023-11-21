@@ -45,6 +45,6 @@ final class EntityTagMap extends TransactionStepBase
         /**
          * @var EntityDto
          */
-        return $this->get(EntityCreate::class);
+        return $this->get(EntityDto::class);
     }
 }
