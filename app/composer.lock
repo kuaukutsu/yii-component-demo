@@ -813,12 +813,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kuaukutsu/poc-task.git",
-                "reference": "2fe7751f9891b76f9b8d9dde3a7170342a027aa4"
+                "reference": "4f35f5ecbb03d356e79d8fcf08baa28cb85759d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kuaukutsu/poc-task/zipball/2fe7751f9891b76f9b8d9dde3a7170342a027aa4",
-                "reference": "2fe7751f9891b76f9b8d9dde3a7170342a027aa4",
+                "url": "https://api.github.com/repos/kuaukutsu/poc-task/zipball/4f35f5ecbb03d356e79d8fcf08baa28cb85759d0",
+                "reference": "4f35f5ecbb03d356e79d8fcf08baa28cb85759d0",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "issues": "https://github.com/kuaukutsu/poc-task/issues",
                 "source": "https://github.com/kuaukutsu/poc-task"
             },
-            "time": "2023-11-25T07:53:04+00:00"
+            "time": "2023-11-25T10:26:18+00:00"
         },
         {
             "name": "laravel/serializable-closure",

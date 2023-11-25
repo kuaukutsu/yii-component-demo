@@ -77,4 +77,15 @@ final class TaskSearch implements TaskQuery
 
         return $collecton;
     }
+
+    public function existsChecksum(string $checksum): bool
+    {
+        return Task::find()
+            ->where(
+                [
+                    'checksum' => $checksum,
+                ]
+            )
+            ->exists();
+    }
 }

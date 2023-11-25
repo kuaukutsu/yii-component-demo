@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use Ramsey\Uuid\UuidFactory;
 use Ramsey\Uuid\UuidFactoryInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use yii\caching\CacheInterface;
 use yii\di\Container;
 use yii\mail\MailerInterface;
@@ -33,14 +35,11 @@ $container = [
             [
                 SecurityInterface::class => create(SecurityDecorator::class),
                 UuidFactoryInterface::class => create(UuidFactory::class),
-                TaskCommand::class => create(TaskService::class),
-                TaskQuery::class => create(TaskSearch::class),
-                StageCommand::class => create(StageService::class),
-                StageQuery::class => create(StageSearch::class),
             ]
         ),
     ],
     'definitions' => [
+        ConsoleOutputInterface::class => ConsoleOutput::class,
         SecurityInterface::class => SecurityDecorator::class,
         UuidFactoryInterface::class => UuidFactory::class,
         TaskCommand::class => TaskService::class,

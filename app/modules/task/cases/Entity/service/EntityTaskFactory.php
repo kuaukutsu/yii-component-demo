@@ -28,7 +28,7 @@ final class EntityTaskFactory
                 new EntityWrapper(
                     class: EntityCreateStage::class,
                     params: [
-                        'idenity' => $identity,
+                        'token' => $identity->getAuthKey(),
                     ]
                 ),
                 new EntityWrapper(
