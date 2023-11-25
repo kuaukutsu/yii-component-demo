@@ -15,13 +15,15 @@ use kuaukutsu\poc\task\TaskManager;
 use kuaukutsu\poc\task\TaskManagerOptions;
 use kuaukutsu\poc\task\tools\TaskManagerOutput;
 
-require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../config/bootstrap.php';
-require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
+$dirname = dirname(__DIR__);
+
+require $dirname . '/vendor/autoload.php';
+require $dirname . '/config/bootstrap.php';
+require $dirname . '/vendor/yiisoft/yii2/Yii.php';
 
 /** @noinspection PhpUnhandledExceptionInspection */
 new yii\console\Application(
-    require __DIR__ . '/../config/console.task.php'
+    require $dirname . '/config/console.task.php'
 );
 
 /**
