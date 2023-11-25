@@ -30,6 +30,7 @@ $config = [
             'migrationPath' => [
                 '@yii/rbac/migrations',
                 '@app/modules/saga/migrations',
+                '@app/modules/task/migrations',
             ],
         ],
     ],

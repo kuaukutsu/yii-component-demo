@@ -10,6 +10,16 @@ use yii\mail\MailerInterface;
 use yii\rbac\ManagerInterface;
 use kuaukutsu\poc\demo\components\security\SecurityDecorator;
 use kuaukutsu\poc\demo\components\security\SecurityInterface;
+use kuaukutsu\poc\demo\modules\task\service\StageSearch;
+use kuaukutsu\poc\demo\modules\task\service\StageService;
+use kuaukutsu\poc\demo\modules\task\service\TaskSearch;
+use kuaukutsu\poc\demo\modules\task\service\TaskService;
+use kuaukutsu\poc\task\service\StageCommand;
+use kuaukutsu\poc\task\service\StageQuery;
+use kuaukutsu\poc\task\service\TaskCommand;
+use kuaukutsu\poc\task\service\TaskQuery;
+
+use function DI\create;
 
 $container = [
     'resolveArrays' => true,
@@ -21,15 +31,22 @@ $container = [
         // container
         \DI\Container::class => new \DI\Container(
             [
-                SecurityInterface::class => \DI\create(SecurityDecorator::class),
-                UuidFactoryInterface::class => \DI\create(UuidFactory::class),
+                SecurityInterface::class => create(SecurityDecorator::class),
+                UuidFactoryInterface::class => create(UuidFactory::class),
+                TaskCommand::class => create(TaskService::class),
+                TaskQuery::class => create(TaskSearch::class),
+                StageCommand::class => create(StageService::class),
+                StageQuery::class => create(StageSearch::class),
             ]
         ),
     ],
     'definitions' => [
         SecurityInterface::class => SecurityDecorator::class,
         UuidFactoryInterface::class => UuidFactory::class,
-
+        TaskCommand::class => TaskService::class,
+        TaskQuery::class => TaskSearch::class,
+        StageCommand::class => StageService::class,
+        StageQuery::class => StageSearch::class,
     ],
 ];
 

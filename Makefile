@@ -30,6 +30,11 @@ cron:
 		-e XDEBUG_MODE=off \
  		cli php main/cron.php
 
+task:
+	docker-compose -f ./docker-compose.yml run --rm -u ${USER} -w /src/app \
+		-e XDEBUG_MODE=off \
+ 		cli php main/task.php
+
 app-nginx-build:
 	USER=${USER} docker-compose -f ./docker-compose.yml build nginx
 

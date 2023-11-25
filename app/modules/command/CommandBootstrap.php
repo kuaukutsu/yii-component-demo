@@ -9,6 +9,7 @@ use yii\base\BootstrapInterface;
 use yii\console\Application as ApplicationConsole;
 use kuaukutsu\poc\demo\modules\command\cases\Crontab\DatetimeCommand;
 use kuaukutsu\poc\demo\modules\command\cases\Saga\SagaCommand;
+use kuaukutsu\poc\demo\modules\command\cases\Task\TaskCommand;
 
 final class CommandBootstrap implements BootstrapInterface
 {
@@ -32,6 +33,9 @@ final class CommandBootstrap implements BootstrapInterface
                 ],
                 'saga' => [
                     'class' => SagaCommand::class,
+                ],
+                'task' => [
+                    'class' => TaskCommand::class,
                 ],
             ]
         );

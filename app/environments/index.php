@@ -40,6 +40,7 @@ return [
             'runtime/logs',
             'runtime/mail',
             'web/assets',
+            'web/export',
         ],
         'setExecutable' => [
             'yii',
@@ -55,6 +56,7 @@ return [
             'runtime/logs',
             'runtime/mail',
             'web/assets',
+            'web/export',
         ],
         'setExecutable' => [
             'yii',

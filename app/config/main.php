@@ -15,6 +15,7 @@ return [
     'sourceLanguage' => 'ru',
     'aliases' => [
         '@tests' => '@app/tests',
+        '@export' => '@app/web/export',
     ],
     // implements BootstrapInterface
     'bootstrap' => [],
