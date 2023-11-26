@@ -31,7 +31,6 @@ final class EntityReportStage extends TaskHandlerBase
         return $this->success(
             new TaskStateMessage($response->comment),
             $context,
-            $response,
         );
     }
 }

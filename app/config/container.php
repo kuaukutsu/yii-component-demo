@@ -33,11 +33,11 @@ $container = [
         MailerInterface::class => static fn() => Yii::$app->getMailer(),
         ContainerInterface::class => new ContainerDecorator(),
         FactoryInterface::class => new ContainerDecorator(),
-    ],
-    'definitions' => [
         ConsoleOutputInterface::class => ConsoleOutput::class,
         SecurityInterface::class => SecurityDecorator::class,
         UuidFactoryInterface::class => UuidFactory::class,
+    ],
+    'definitions' => [
         TaskCommand::class => TaskService::class,
         TaskQuery::class => TaskSearch::class,
         StageCommand::class => StageService::class,
