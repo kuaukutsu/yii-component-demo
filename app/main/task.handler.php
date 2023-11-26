@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-use Ramsey\Uuid\Uuid;
 use kuaukutsu\poc\task\handler\StageHandler;
 
-use function kuaukutsu\poc\demo\argument;
+use function kuaukutsu\poc\task\tools\get_previous_uuid;
+use function kuaukutsu\poc\task\tools\get_stage_uuid;
 
 $dirname = dirname(__DIR__);
 
@@ -27,17 +27,13 @@ new yii\console\Application(
     require $dirname . '/config/console.task.php'
 );
 
-/** @var non-empty-string|null $stageUuid */
-$stageUuid = argument('stage');
-/** @var non-empty-string|null $previousUuid */
-$previousUuid = argument('previous');
-if ($stageUuid === null || Uuid::isValid($stageUuid) === false) {
-    throw new RuntimeException("Stage UUID must be declared.");
-}
-
 /**
  * @psalm-var StageHandler $handler
  * @noinspection PhpUnhandledExceptionInspection
  */
 $handler = Yii::$container->get(StageHandler::class);
-$handler->handle($stageUuid, $previousUuid);
+$exitCode = $handler->handle(
+    get_stage_uuid(),
+    get_previous_uuid(),
+);
+exit($exitCode);

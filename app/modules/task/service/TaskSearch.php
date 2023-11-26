@@ -78,12 +78,19 @@ final class TaskSearch implements TaskQuery
         return $collecton;
     }
 
-    public function existsChecksum(string $checksum): bool
+    public function existsOpenByChecksum(string $checksum): bool
     {
+        $flag = new TaskFlag();
+
         return Task::find()
             ->where(
                 [
                     'checksum' => $checksum,
+                    'flag' => [
+                        $flag->setReady()->toValue(),
+                        $flag->setRunning()->toValue(),
+                        $flag->setWaiting()->toValue(),
+                    ],
                 ]
             )
             ->exists();
