@@ -40,10 +40,9 @@ final class m231125_080401_create_task_stage extends Migration
                 'flag' => $this->smallInteger()
                     ->defaultValue(0)
                     ->comment('Флаг состояния'),
-                'state' => $this->text()
+                'state' => $this->binary()
                     ->comment('Сериализованное представление текущего состояния'),
-                'handler' => $this->text()
-                    ->notNull()
+                'handler' => $this->binary()
                     ->comment('Сериализованное представление обработчика'),
                 'order' => $this->smallInteger()
                     ->defaultValue(0)

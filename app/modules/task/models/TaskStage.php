@@ -9,6 +9,7 @@ use yii\behaviors\TimestampBehavior;
 use kuaukutsu\ds\dto\Dtoable;
 use kuaukutsu\poc\task\dto\StageDto;
 use kuaukutsu\poc\demo\shared\validator\UuidModelValidator;
+use kuaukutsu\poc\demo\modules\task\components\BinaryBehavior;
 
 /**
  * This is the model class for table "task_stage".
@@ -43,8 +44,8 @@ final class TaskStage extends ActiveRecord implements Dtoable
         return [
             [['uuid', 'task_uuid', 'handler'], 'required'],
             [['uuid', 'task_uuid'], UuidModelValidator::class],
-            [['state', 'handler'], 'string'],
             [['flag', 'order'], 'integer'],
+            [['state', 'handler'], 'safe'], // binary
         ];
     }
 
@@ -54,6 +55,10 @@ final class TaskStage extends ActiveRecord implements Dtoable
             'timestamp' => [
                 'class' => TimestampBehavior::class,
                 'value' => gmdate("Y-m-d H:i:s"),
+            ],
+            'binary' => [
+                'class' => BinaryBehavior::class,
+                'attributes' => ['state', 'handler'],
             ],
         ];
     }

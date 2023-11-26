@@ -9,6 +9,7 @@ use yii\behaviors\TimestampBehavior;
 use kuaukutsu\ds\dto\Dtoable;
 use kuaukutsu\poc\task\dto\TaskDto;
 use kuaukutsu\poc\demo\shared\validator\UuidModelValidator;
+use kuaukutsu\poc\demo\modules\task\components\BinaryBehavior;
 
 /**
  * This is the model class for table "task".
@@ -44,7 +45,7 @@ final class Task extends ActiveRecord implements Dtoable
             [['flag'], 'integer'],
             [['title'], 'string', 'max' => 256],
             [['checksum'], 'string', 'max' => 32],
-            [['state'], 'string'],
+            [['state'], 'safe'], // binary
         ];
     }
 
@@ -54,6 +55,10 @@ final class Task extends ActiveRecord implements Dtoable
             'timestamp' => [
                 'class' => TimestampBehavior::class,
                 'value' => gmdate("Y-m-d H:i:s"),
+            ],
+            'binary' => [
+                'class' => BinaryBehavior::class,
+                'attributes' => ['state'],
             ],
         ];
     }

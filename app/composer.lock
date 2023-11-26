@@ -745,16 +745,16 @@
         },
         {
             "name": "kuaukutsu/poc-saga",
-            "version": "0.2.2",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kuaukutsu/poc-saga.git",
-                "reference": "941b5522c6b14b802f5a2212be65f2ab34d5cc50"
+                "reference": "c1dbbda86b6f4e6b29f30ac1e2d1957a72839f30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kuaukutsu/poc-saga/zipball/941b5522c6b14b802f5a2212be65f2ab34d5cc50",
-                "reference": "941b5522c6b14b802f5a2212be65f2ab34d5cc50",
+                "url": "https://api.github.com/repos/kuaukutsu/poc-saga/zipball/c1dbbda86b6f4e6b29f30ac1e2d1957a72839f30",
+                "reference": "c1dbbda86b6f4e6b29f30ac1e2d1957a72839f30",
                 "shasum": ""
             },
             "require": {
@@ -805,7 +805,7 @@
                 "issues": "https://github.com/kuaukutsu/poc-saga/issues",
                 "source": "https://github.com/kuaukutsu/poc-saga"
             },
-            "time": "2023-11-21T14:57:33+00:00"
+            "time": "2023-11-26T06:06:31+00:00"
         },
         {
             "name": "kuaukutsu/poc-task",
@@ -813,12 +813,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kuaukutsu/poc-task.git",
-                "reference": "4f35f5ecbb03d356e79d8fcf08baa28cb85759d0"
+                "reference": "9a6b13731e761776d2a293571329eb652baa9d7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kuaukutsu/poc-task/zipball/4f35f5ecbb03d356e79d8fcf08baa28cb85759d0",
-                "reference": "4f35f5ecbb03d356e79d8fcf08baa28cb85759d0",
+                "url": "https://api.github.com/repos/kuaukutsu/poc-task/zipball/9a6b13731e761776d2a293571329eb652baa9d7b",
+                "reference": "9a6b13731e761776d2a293571329eb652baa9d7b",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "issues": "https://github.com/kuaukutsu/poc-task/issues",
                 "source": "https://github.com/kuaukutsu/poc-task"
             },
-            "time": "2023-11-25T10:26:18+00:00"
+            "time": "2023-11-26T06:34:41+00:00"
         },
         {
             "name": "laravel/serializable-closure",

@@ -40,7 +40,7 @@ final class m231125_080348_create_task extends Migration
                 'flag' => $this->smallInteger()
                     ->defaultValue(0)
                     ->comment('Флаг состояния'),
-                'state' => $this->text()
+                'state' => $this->binary()
                     ->comment('Сериализованное представление текущего состояния'),
                 'checksum' => $this->char(32)
                     ->notNull()
