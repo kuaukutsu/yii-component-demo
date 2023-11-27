@@ -9,6 +9,7 @@ use kuaukutsu\poc\task\EntityWrapper;
 use kuaukutsu\poc\task\TaskBuilder;
 use kuaukutsu\poc\demo\components\identity\DomainIdentity;
 use kuaukutsu\poc\demo\modules\task\cases\Entity\task\EntityCreateStage;
+use kuaukutsu\poc\demo\modules\task\cases\Entity\task\EntityPromiseStage;
 use kuaukutsu\poc\demo\modules\task\cases\Entity\task\EntityReportStage;
 
 final class EntityTaskFactory
@@ -33,6 +34,9 @@ final class EntityTaskFactory
                 ),
                 new EntityWrapper(
                     class: EntityReportStage::class,
+                ),
+                new EntityWrapper(
+                    class: EntityPromiseStage::class,
                 ),
             )
         );

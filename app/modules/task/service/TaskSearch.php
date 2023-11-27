@@ -35,7 +35,10 @@ final class TaskSearch implements TaskQuery
         $models = Task::find()
             ->where(
                 [
-                    'flag' => $flag->setReady()->toValue(),
+                    'flag' => [
+                        $flag->setReady()->toValue(),
+                        $flag->setPromised()->toValue(),
+                    ],
                 ]
             )
             ->limit($limit)
