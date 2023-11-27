@@ -17,7 +17,8 @@ use kuaukutsu\poc\demo\modules\task\components\BinaryBehavior;
  * @property string $uuid
  * @property string $title Название
  * @property int|null $flag Флаг состояния
- * @property string $state Сериализованное представление текущего состояния
+ * @property resource $state Сериализованное представление текущего состояния
+ * @property array $options TaskOptions настройки
  * @property string $checksum checksum
  * @property string $created_at
  * @property string $updated_at
@@ -45,7 +46,7 @@ final class Task extends ActiveRecord implements Dtoable
             [['flag'], 'integer'],
             [['title'], 'string', 'max' => 256],
             [['checksum'], 'string', 'max' => 32],
-            [['state'], 'safe'], // binary
+            [['state', 'options'], 'safe'], // binary
         ];
     }
 

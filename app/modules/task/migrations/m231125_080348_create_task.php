@@ -42,6 +42,10 @@ final class m231125_080348_create_task extends Migration
                     ->comment('Флаг состояния'),
                 'state' => $this->binary()
                     ->comment('Сериализованное представление текущего состояния'),
+                'options' => $this->getDb()->getSchema()
+                    ->createColumnSchemaBuilder('jsonb')
+                    ->defaultValue('{}')
+                    ->comment('TaskOptions'),
                 'checksum' => $this->char(32)
                     ->notNull()
                     ->comment('checksum'),
