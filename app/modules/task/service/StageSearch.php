@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace kuaukutsu\poc\demo\modules\task\service;
 
 use Generator;
+use yii\db\Expression;
 use kuaukutsu\poc\task\dto\StageCollection;
 use kuaukutsu\poc\task\dto\StageModel;
+use kuaukutsu\poc\task\dto\TaskMetrics;
 use kuaukutsu\poc\task\exception\NotFoundException;
 use kuaukutsu\poc\task\state\TaskFlag;
 use kuaukutsu\poc\task\service\StageQuery;
 use kuaukutsu\poc\task\EntityUuid;
 use kuaukutsu\poc\demo\modules\task\models\TaskStage;
+
+use function kuaukutsu\poc\task\tools\entity_hydrator;
 
 final class StageSearch implements StageQuery
 {
@@ -104,6 +108,67 @@ final class StageSearch implements StageQuery
         }
 
         return $collecton;
+    }
+
+    public function getMetricsByTask(EntityUuid $taskUuid): TaskMetrics
+    {
+        $flag = new TaskFlag();
+
+        /**
+         * @var array{"count": int} $rows
+         */
+        $rows = TaskStage::find()
+            ->select(
+                [
+                    'count' => new Expression('COUNT(1)'),
+                    'running' => new Expression(
+                        'SUM(CASE WHEN flag=:ready OR flag=:running THEN 1 ELSE 0 END)',
+                        [
+                            ':ready' => $flag->setReady()->toValue(),
+                            ':running' => $flag->setRunning()->toValue(),
+                        ]
+                    ),
+                    'waiting' => new Expression(
+                        'SUM(CASE WHEN flag=:waiting OR flag=:promise OR flag=:paused THEN 1 ELSE 0 END)',
+                        [
+                            ':waiting' => $flag->setWaiting()->toValue(),
+                            ':promise' => $flag->setPromised()->toValue(),
+                            ':paused' => $flag->setPaused()->toValue(),
+                        ]
+                    ),
+                    'success' => new Expression(
+                        'SUM(CASE WHEN flag=:success THEN 1 ELSE 0 END)',
+                        [
+                            ':success' => $flag->setSuccess()->toValue(),
+                        ]
+                    ),
+                    'canceled' => new Expression(
+                        'SUM(CASE WHEN flag=:canceled THEN 1 ELSE 0 END)',
+                        [
+                            ':canceled' => $flag->setCanceled()->toValue(),
+                        ]
+                    ),
+                    'failed' => new Expression(
+                        'SUM(CASE WHEN flag>=:error THEN 1 ELSE 0 END)',
+                        [
+                            ':error' => $flag->setError()->toValue(),
+                        ]
+                    ),
+                ]
+            )
+            ->where(
+                [
+                    'task_uuid' => $taskUuid->getUuid(),
+                ]
+            )
+            ->asArray()
+            ->one();
+
+        if ($rows['count'] === 0) {
+            return new TaskMetrics();
+        }
+
+        return entity_hydrator(TaskMetrics::class, $rows);
     }
 
     public function findReadyByTask(EntityUuid $taskUuid): ?StageModel

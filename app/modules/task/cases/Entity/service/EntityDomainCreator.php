@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace kuaukutsu\poc\demo\modules\task\cases\Entity\service;
 
-use kuaukutsu\poc\task\service\TaskViewer;
 use kuaukutsu\poc\demo\components\identity\DomainIdentity;
-use kuaukutsu\poc\demo\modules\task\cases\Entity\dto\TaskDomainDto;
+use kuaukutsu\poc\demo\modules\task\cases\Manage\dto\TaskDomainDto;
+use kuaukutsu\poc\task\service\TaskViewer;
 
 final class EntityDomainCreator
 {
