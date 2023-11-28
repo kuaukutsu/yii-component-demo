@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace kuaukutsu\poc\demo\modules\task\service;
 
-use kuaukutsu\poc\task\dto\TaskDto;
 use kuaukutsu\poc\task\dto\TaskModel;
+use kuaukutsu\poc\task\dto\TaskModelCreate;
+use kuaukutsu\poc\task\dto\TaskModelState;
 use kuaukutsu\poc\task\service\TaskCommand;
 use kuaukutsu\poc\task\EntityUuid;
 use kuaukutsu\poc\demo\shared\exception\ModelDeleteException;
@@ -24,11 +25,11 @@ final class TaskService implements TaskCommand
     /**
      * @throws ModelSaveException
      */
-    public function create(EntityUuid $uuid, TaskModel $model): TaskDto
+    public function create(EntityUuid $uuid, TaskModelCreate $model): TaskModel
     {
         return $this->save(
             new PrimaryUuidCreate($uuid->getUuid()),
-            $model->toArrayRecursive()
+            $model->toArray()
         );
     }
 
@@ -36,30 +37,12 @@ final class TaskService implements TaskCommand
      * @throws NotFoundException
      * @throws ModelSaveException
      */
-    public function update(EntityUuid $uuid, TaskModel $model): TaskDto
+    public function state(EntityUuid $uuid, TaskModelState $model): TaskModel
     {
         return $this->save(
             new PrimaryUuidUpdate($uuid->getUuid()),
-            $model->toArrayRecursive()
+            $model->toArray()
         );
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws ModelSaveException
-     */
-    public function replace(EntityUuid $uuid, TaskDto $model): bool
-    {
-        $rows = Task::updateAll(
-            [
-                'flag' => $model->flag,
-                'state' => $model->state,
-                'updated_at' => gmdate('c'),
-            ],
-            $uuid->getQueryCondition(),
-        );
-
-        return $rows > 0;
     }
 
     /**
@@ -79,7 +62,7 @@ final class TaskService implements TaskCommand
      * @throws NotFoundException
      * @throws ModelSaveException
      */
-    private function save(PrimaryKeyInterface $pk, array $attributes): TaskDto
+    private function save(PrimaryKeyInterface $pk, array $attributes): TaskModel
     {
         $model = $pk->isNewRecord()
             ? new Task($pk->getValue())

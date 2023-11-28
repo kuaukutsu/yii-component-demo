@@ -6,10 +6,11 @@ namespace kuaukutsu\poc\demo\modules\task\models;
 
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use kuaukutsu\ds\dto\Dtoable;
-use kuaukutsu\poc\task\dto\TaskDto;
+use kuaukutsu\poc\task\dto\TaskModel;
 use kuaukutsu\poc\demo\shared\validator\UuidModelValidator;
 use kuaukutsu\poc\demo\modules\task\components\BinaryBehavior;
+
+use function kuaukutsu\poc\task\tools\entity_hydrator;
 
 /**
  * This is the model class for table "task".
@@ -23,9 +24,9 @@ use kuaukutsu\poc\demo\modules\task\components\BinaryBehavior;
  * @property string $created_at
  * @property string $updated_at
  *
- * @method array<string, mixed> toArray(array $fields = [], array $expand = [], $recursive = true)
+ * @method array<string, int|string|array|null> toArray(array $fields = [], array $expand = [], $recursive = true)
  */
-final class Task extends ActiveRecord implements Dtoable
+final class Task extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -64,8 +65,8 @@ final class Task extends ActiveRecord implements Dtoable
         ];
     }
 
-    public function toDto(): TaskDto
+    public function toDto(): TaskModel
     {
-        return TaskDto::hydrate($this->toArray());
+        return entity_hydrator(TaskModel::class, $this->toArray());
     }
 }

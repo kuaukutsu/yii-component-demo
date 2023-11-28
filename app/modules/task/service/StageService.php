@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace kuaukutsu\poc\demo\modules\task\service;
 
-use kuaukutsu\poc\task\dto\StageDto;
 use kuaukutsu\poc\task\dto\StageModel;
+use kuaukutsu\poc\task\dto\StageModelCreate;
+use kuaukutsu\poc\task\dto\StageModelState;
 use kuaukutsu\poc\task\service\StageCommand;
 use kuaukutsu\poc\task\EntityUuid;
 use kuaukutsu\poc\demo\shared\exception\ModelDeleteException;
@@ -24,11 +25,11 @@ final class StageService implements StageCommand
     /**
      * @throws ModelSaveException
      */
-    public function create(EntityUuid $uuid, StageModel $model): StageDto
+    public function create(EntityUuid $uuid, StageModelCreate $model): StageModel
     {
         return $this->save(
             new PrimaryUuidCreate($uuid->getUuid()),
-            $model->toArrayRecursive()
+            $model->toArray()
         );
     }
 
@@ -36,31 +37,12 @@ final class StageService implements StageCommand
      * @throws NotFoundException
      * @throws ModelSaveException
      */
-    public function update(EntityUuid $uuid, StageModel $model): StageDto
+    public function state(EntityUuid $uuid, StageModelState $model): StageModel
     {
         return $this->save(
             new PrimaryUuidUpdate($uuid->getUuid()),
-            $model->toArrayRecursive()
+            $model->toArray()
         );
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws ModelSaveException
-     */
-    public function replace(EntityUuid $uuid, StageDto $model): bool
-    {
-        $rows = TaskStage::updateAll(
-            [
-                'flag' => $model->flag,
-                'state' => $model->state,
-                'order' => $model->order,
-                'updated_at' => gmdate('c'),
-            ],
-            $uuid->getQueryCondition(),
-        );
-
-        return $rows > 0;
     }
 
     /**
@@ -94,7 +76,7 @@ final class StageService implements StageCommand
      * @throws NotFoundException
      * @throws ModelSaveException
      */
-    private function save(PrimaryKeyInterface $pk, array $attributes): StageDto
+    private function save(PrimaryKeyInterface $pk, array $attributes): StageModel
     {
         $model = $pk->isNewRecord()
             ? new TaskStage($pk->getValue())

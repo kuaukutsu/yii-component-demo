@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace kuaukutsu\poc\demo\modules\task\service;
 
-use kuaukutsu\poc\demo\modules\task\models\Task;
 use kuaukutsu\poc\task\dto\TaskCollection;
-use kuaukutsu\poc\task\dto\TaskDto;
+use kuaukutsu\poc\task\dto\TaskModel;
 use kuaukutsu\poc\task\exception\NotFoundException;
+use kuaukutsu\poc\task\state\TaskFlag;
 use kuaukutsu\poc\task\service\TaskQuery;
 use kuaukutsu\poc\task\EntityUuid;
-use kuaukutsu\poc\task\state\TaskFlag;
+use kuaukutsu\poc\demo\modules\task\models\Task;
 
 final class TaskSearch implements TaskQuery
 {
-    public function getOne(EntityUuid $uuid): TaskDto
+    public function getOne(EntityUuid $uuid): TaskModel
     {
         /** @var Task|null $model */
         $model = Task::findOne($uuid->getQueryCondition());

@@ -3,8 +3,8 @@
     <description>The PSR12 coding standard.</description>
     <rule ref="PSR12"/>
 
-    <file>src</file>
-    <file>tests</file>
+    <file>app</file>
+    <exclude-pattern>./vendor/*</exclude-pattern>
 
     <!-- Show progression -->
     <arg name="basepath" value="."/>
@@ -19,11 +19,6 @@
             <property name="linesCountBeforeDeclare" value="1"/>
             <property name="linesCountAfterDeclare" value="1"/>
             <property name="spacesCountAroundEqualsSign" value="0"/>
-        </properties>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
-        <properties>
-            <property name="searchAnnotations" value="1"/>
         </properties>
     </rule>
     <!-- https://github.com/slevomat/coding-standard/blob/master/doc/arrays.md -->

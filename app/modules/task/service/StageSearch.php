@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace kuaukutsu\poc\demo\modules\task\service;
 
 use Generator;
-use kuaukutsu\poc\demo\modules\task\models\TaskStage;
 use kuaukutsu\poc\task\dto\StageCollection;
-use kuaukutsu\poc\task\dto\StageDto;
+use kuaukutsu\poc\task\dto\StageModel;
 use kuaukutsu\poc\task\exception\NotFoundException;
+use kuaukutsu\poc\task\state\TaskFlag;
 use kuaukutsu\poc\task\service\StageQuery;
 use kuaukutsu\poc\task\EntityUuid;
-use kuaukutsu\poc\task\state\TaskFlag;
+use kuaukutsu\poc\demo\modules\task\models\TaskStage;
 
 final class StageSearch implements StageQuery
 {
-    public function getOne(EntityUuid $uuid): StageDto
+    public function getOne(EntityUuid $uuid): StageModel
     {
         /** @var TaskStage|null $model */
         $model = TaskStage::findOne($uuid->getQueryCondition());
@@ -28,7 +28,7 @@ final class StageSearch implements StageQuery
         return $model->toDto();
     }
 
-    public function findOne(EntityUuid $uuid): ?StageDto
+    public function findOne(EntityUuid $uuid): ?StageModel
     {
         /** @var TaskStage|null $model */
         $model = TaskStage::findOne($uuid->getQueryCondition());
@@ -106,7 +106,7 @@ final class StageSearch implements StageQuery
         return $collecton;
     }
 
-    public function findReadyByTask(EntityUuid $taskUuid): ?StageDto
+    public function findReadyByTask(EntityUuid $taskUuid): ?StageModel
     {
         /** @var TaskStage|null $model */
         $model = TaskStage::find()
@@ -123,7 +123,7 @@ final class StageSearch implements StageQuery
         return $model?->toDto();
     }
 
-    public function findPausedByTask(EntityUuid $taskUuid): ?StageDto
+    public function findPausedByTask(EntityUuid $taskUuid): ?StageModel
     {
         $flag = new TaskFlag();
 
