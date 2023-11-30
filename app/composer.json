@@ -27,7 +27,7 @@
     "enqueue/amqp-lib": "^0.10",
     "kuaukutsu/poc-cron": "@dev",
     "kuaukutsu/poc-saga": "^0.2",
-    "kuaukutsu/poc-task": "@dev",
+    "kuaukutsu/poc-task": "^0.0.1",
     "kuaukutsu/ds-collection": "^2.0",
     "kuaukutsu/ds-dto": "^2.0",
     "yiisoft/arrays": "^3.0",
