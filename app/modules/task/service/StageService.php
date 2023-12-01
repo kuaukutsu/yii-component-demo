@@ -45,6 +45,18 @@ final class StageService implements StageCommand
         );
     }
 
+    public function terminateByTask(array $indexUuid, StageModelState $model): bool
+    {
+        $rows = TaskStage::updateAll(
+            $model->toArray(),
+            [
+                'task_uuid' => $indexUuid,
+            ]
+        );
+
+        return $rows > 0;
+    }
+
     /**
      * @throws ModelDeleteException
      */

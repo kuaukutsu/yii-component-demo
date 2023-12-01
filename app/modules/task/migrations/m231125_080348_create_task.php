@@ -69,12 +69,11 @@ final class m231125_080348_create_task extends Migration
         );
 
         $this->createIndex(
-            'UI_' . $tableName . '_checksum',
+            'I_' . $tableName . '_checksum',
             $this->table,
             [
                 'checksum',
             ],
-            true,
         );
 
         $this->createIndex(

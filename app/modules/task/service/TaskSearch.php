@@ -92,6 +92,7 @@ final class TaskSearch implements TaskQuery
                     'flag' => [
                         $flag->setReady()->toValue(),
                         $flag->setRunning()->toValue(),
+                        $flag->setPaused()->toValue(),
                         $flag->setWaiting()->toValue(),
                     ],
                 ]

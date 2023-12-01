@@ -45,6 +45,18 @@ final class TaskService implements TaskCommand
         );
     }
 
+    public function terminate(array $indexUuid, TaskModelState $model): bool
+    {
+        $rows = Task::updateAll(
+            $model->toArray(),
+            [
+                'uuid' => $indexUuid,
+            ]
+        );
+
+        return $rows > 0;
+    }
+
     /**
      * @throws NotFoundException
      * @throws ModelDeleteException
