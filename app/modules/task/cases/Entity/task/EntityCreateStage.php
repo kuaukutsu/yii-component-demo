@@ -44,7 +44,6 @@ final class EntityCreateStage extends TaskHandlerBase
 
         return $this->success(
             new TaskStateMessage($entity->comment),
-            $context,
             $entity,
         );
     }

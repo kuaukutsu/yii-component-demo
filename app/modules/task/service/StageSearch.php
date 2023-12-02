@@ -83,7 +83,7 @@ final class StageSearch implements StageQuery
         return $collecton;
     }
 
-    public function getPromiseByTask(EntityUuid $taskUuid): StageCollection
+    public function getReadyByTask(EntityUuid $taskUuid): StageCollection
     {
         $flag = new TaskFlag();
 
@@ -93,7 +93,8 @@ final class StageSearch implements StageQuery
                 [
                     'task_uuid' => $taskUuid->getUuid(),
                     'flag' => [
-                        $flag->setPromised()->toValue(),
+                        $flag->unset()->setReady()->toValue(),
+                        $flag->unset()->setPaused()->toValue(),
                     ],
                 ]
             )

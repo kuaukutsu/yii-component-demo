@@ -24,12 +24,7 @@ final class EntityPromiseStage extends TaskHandlerBase
 
     public function handle(TaskStageContext $context): TaskStateInterface
     {
-        if ($context->previous === null) {
-            return $this->error(
-                new TaskStateMessage('Previous stage must be declared.'),
-                $context,
-            );
-        }
+        $this->preparePrevious($context);
 
         $task = $this->builder
             ->create("[$context->task] nested task.")

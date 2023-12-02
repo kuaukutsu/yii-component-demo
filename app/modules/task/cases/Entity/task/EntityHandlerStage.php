@@ -24,7 +24,6 @@ final class EntityHandlerStage extends TaskHandlerBase
 
         return $this->success(
             new TaskStateMessage('Handler success.'),
-            $context,
             $response,
         );
     }
