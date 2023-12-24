@@ -16,10 +16,9 @@ RUN echo "# create structure #" \
     && mkdir -p $WORKDIR \
     && chown -R $UID:www-data $WORKDIR
 
-RUN echo "# mongodb #" \
+RUN echo "# Install extensions #" \
     && install-php-extensions \
-      mongodb \
-      pgsql
+      mongodb
 
 COPY --from=composer:latest --link /usr/bin/composer /usr/bin/composer
 

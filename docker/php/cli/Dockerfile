@@ -18,9 +18,8 @@ RUN echo "# Create structure #" \
     && mkdir -p $WORKDIR \
     && chown -R $UID:www-data $WORKDIR
 
-RUN echo "# mongodb #" \
+RUN echo "# Install extensions #" \
     && install-php-extensions \
-      sync \
       mongodb
 
 FROM app_setup AS app_cli
