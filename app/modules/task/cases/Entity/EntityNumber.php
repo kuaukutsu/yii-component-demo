@@ -6,9 +6,9 @@ namespace kuaukutsu\poc\demo\modules\task\cases\Entity;
 
 use kuaukutsu\poc\task\TaskResponseInterface;
 
-final class EntityNumber implements TaskResponseInterface
+final readonly class EntityNumber implements TaskResponseInterface
 {
-    public function __construct(public readonly int $number)
+    public function __construct(public int $number)
     {
     }
 }

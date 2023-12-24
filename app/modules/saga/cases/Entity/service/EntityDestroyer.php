@@ -9,9 +9,9 @@ use kuaukutsu\poc\demo\shared\exception\ModelDeleteException;
 use kuaukutsu\poc\demo\shared\exception\NotFoundException;
 use kuaukutsu\poc\demo\modules\saga\service\EntityService;
 
-final class EntityDestroyer
+final readonly class EntityDestroyer
 {
-    public function __construct(private readonly EntityService $service)
+    public function __construct(private EntityService $service)
     {
     }
 

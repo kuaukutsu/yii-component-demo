@@ -9,11 +9,11 @@ use kuaukutsu\poc\task\service\TaskViewer;
 use kuaukutsu\poc\task\tools\NodeServiceFactory;
 use kuaukutsu\poc\demo\components\task\node\MainNode;
 
-final class TaskViewerFactory
+final readonly class TaskViewerFactory
 {
     public function __construct(
-        private readonly NodeServiceFactory $factory,
-        private readonly MainNode $mainNode,
+        private NodeServiceFactory $factory,
+        private MainNode $mainNode,
     ) {
     }
 

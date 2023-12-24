@@ -14,13 +14,13 @@ use kuaukutsu\poc\demo\modules\saga\service\TagSearch;
 use kuaukutsu\poc\demo\modules\saga\models\EntityModel;
 use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
 
-final class EntityCreator
+final readonly class EntityCreator
 {
     public function __construct(
-        private readonly EntityService $service,
-        private readonly TagSearch $tagSearch,
-        private readonly EntityTagMapService $mapService,
-        private readonly UuidFactory $uuidFactory,
+        private EntityService $service,
+        private TagSearch $tagSearch,
+        private EntityTagMapService $mapService,
+        private UuidFactory $uuidFactory,
     ) {
     }
 

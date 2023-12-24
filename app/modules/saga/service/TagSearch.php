@@ -9,9 +9,9 @@ use kuaukutsu\poc\demo\modules\saga\cases\Tag\handler\UuidFactory;
 use kuaukutsu\poc\demo\modules\saga\models\TagDto;
 use kuaukutsu\poc\demo\modules\saga\models\Tag;
 
-final class TagSearch
+final readonly class TagSearch
 {
-    public function __construct(private readonly UuidFactory $uuidFactory)
+    public function __construct(private UuidFactory $uuidFactory)
     {
     }
 

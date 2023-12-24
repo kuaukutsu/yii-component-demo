@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace kuaukutsu\poc\demo\components\identity;
 
-final class GuestIdentity implements DomainIdentity
+final readonly class GuestIdentity implements DomainIdentity
 {
     /**
      * @param non-empty-string $token
      */
-    public function __construct(private readonly string $token = '00000000-0000-0000-0000-000000000000')
+    public function __construct(private string $token = '00000000-0000-0000-0000-000000000000')
     {
     }
 

@@ -9,14 +9,14 @@ use kuaukutsu\poc\task\service\TaskViewer;
 use kuaukutsu\poc\demo\components\task\TaskViewerFactory;
 use kuaukutsu\poc\demo\modules\task\cases\Manage\dto\TaskDomainDto;
 
-final class TaskDomainViewer
+final readonly class TaskDomainViewer
 {
-    private readonly TaskViewer $viewer;
+    private TaskViewer $viewer;
 
     /**
      * @throws ContainerExceptionInterface
      */
-    public function __construct(private readonly TaskViewerFactory $factory)
+    public function __construct(private TaskViewerFactory $factory)
     {
         $this->viewer = $this->factory->createByMain();
     }

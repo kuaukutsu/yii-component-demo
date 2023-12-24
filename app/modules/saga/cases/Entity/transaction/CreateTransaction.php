@@ -9,16 +9,16 @@ use kuaukutsu\poc\saga\step\StepCollection;
 use kuaukutsu\poc\saga\TransactionInterface;
 use kuaukutsu\poc\demo\components\identity\DomainIdentity;
 
-final class CreateTransaction implements TransactionInterface
+final readonly class CreateTransaction implements TransactionInterface
 {
     /**
      * @param array<string, scalar> $entityData
      * @param non-empty-string[] $tags
      */
     public function __construct(
-        private readonly DomainIdentity $identity,
-        private readonly array $entityData,
-        private readonly array $tags,
+        private DomainIdentity $identity,
+        private array $entityData,
+        private array $tags,
     ) {
     }
 

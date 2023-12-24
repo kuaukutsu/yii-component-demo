@@ -17,7 +17,7 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->skip(
         [
-            __DIR__ . '/app/vendor'
+            __DIR__ . '/app/vendor',
         ]
     );
 

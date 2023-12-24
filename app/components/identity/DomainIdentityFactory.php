@@ -6,15 +6,15 @@ namespace kuaukutsu\poc\demo\components\identity;
 
 use Throwable;
 
-final class DomainIdentityFactory
+final readonly class DomainIdentityFactory
 {
     /**
      * @param class-string<DomainIdentity> $identityClass
      * @param class-string<DomainIdentity> $nobodyClass
      */
     public function __construct(
-        private readonly string $identityClass,
-        private readonly string $nobodyClass,
+        private string $identityClass,
+        private string $nobodyClass,
     ) {
     }
 

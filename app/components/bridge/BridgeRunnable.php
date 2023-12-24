@@ -9,9 +9,9 @@ use yii\di\Container;
 use kuaukutsu\ds\dto\DtoInterface;
 use kuaukutsu\ds\collection\Collection;
 
-final class BridgeRunnable
+final readonly class BridgeRunnable
 {
-    public function __construct(private readonly Container $container)
+    public function __construct(private Container $container)
     {
     }
 

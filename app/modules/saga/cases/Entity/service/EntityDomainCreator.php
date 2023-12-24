@@ -10,9 +10,9 @@ use kuaukutsu\poc\demo\components\identity\DomainIdentity;
 use kuaukutsu\poc\demo\modules\saga\cases\Entity\transaction\CreateTransaction;
 use kuaukutsu\poc\demo\modules\saga\models\EntityDto;
 
-final class EntityDomainCreator
+final readonly class EntityDomainCreator
 {
-    public function __construct(private readonly TransactionRunner $transaction)
+    public function __construct(private TransactionRunner $transaction)
     {
     }
 

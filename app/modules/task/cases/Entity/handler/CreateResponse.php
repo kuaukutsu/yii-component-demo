@@ -12,9 +12,9 @@ use kuaukutsu\poc\demo\shared\exception\ModelSaveException;
 use kuaukutsu\poc\demo\shared\exception\NotImplementedException;
 use kuaukutsu\poc\demo\shared\request\Task\EntityCreateRequest;
 
-final class CreateResponse implements BridgeResponse
+final readonly class CreateResponse implements BridgeResponse
 {
-    public function __construct(private readonly EntityDomainCreator $service)
+    public function __construct(private EntityDomainCreator $service)
     {
     }
 

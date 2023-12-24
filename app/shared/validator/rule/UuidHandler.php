@@ -10,9 +10,9 @@ use Yiisoft\Validator\Result;
 use Yiisoft\Validator\RuleHandlerInterface;
 use Yiisoft\Validator\ValidationContext;
 
-final class UuidHandler implements RuleHandlerInterface
+final readonly class UuidHandler implements RuleHandlerInterface
 {
-    private readonly UuidFactory $uuidFactory;
+    private UuidFactory $uuidFactory;
 
     public function __construct()
     {

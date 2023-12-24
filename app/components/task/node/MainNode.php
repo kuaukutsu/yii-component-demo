@@ -15,9 +15,9 @@ use kuaukutsu\poc\demo\components\task\node\main\MainStageService;
 use kuaukutsu\poc\demo\components\task\node\main\MainTaskSearch;
 use kuaukutsu\poc\demo\components\task\node\main\MainTaskService;
 
-final class MainNode implements EntityNode
+final readonly class MainNode implements EntityNode
 {
-    public function __construct(private readonly ContainerInterface $container)
+    public function __construct(private ContainerInterface $container)
     {
     }
 

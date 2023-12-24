@@ -12,9 +12,9 @@ use kuaukutsu\poc\demo\shared\exception\ModelSaveException;
 use kuaukutsu\poc\demo\shared\exception\NotImplementedException;
 use kuaukutsu\poc\demo\shared\request\Task\TaskViewRequest;
 
-final class ViewResponse implements BridgeResponse
+final readonly class ViewResponse implements BridgeResponse
 {
-    public function __construct(private readonly TaskDomainViewer $service)
+    public function __construct(private TaskDomainViewer $service)
     {
     }
 

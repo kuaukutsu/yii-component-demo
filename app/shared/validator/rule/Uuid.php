@@ -10,13 +10,13 @@ use Yiisoft\Validator\RuleInterface;
 use Yiisoft\Validator\SkipOnEmptyInterface;
 
 #[Attribute(Attribute::TARGET_PROPERTY | Attribute::IS_REPEATABLE)]
-final class Uuid implements RuleInterface, SkipOnEmptyInterface
+final readonly class Uuid implements RuleInterface, SkipOnEmptyInterface
 {
     use SkipOnEmptyTrait;
 
     public function __construct(
-        public readonly string $message = 'The current {value} is not UUID.',
-        private readonly bool $skipOnEmpty = true,
+        public string $message = 'The current {value} is not UUID.',
+        private bool $skipOnEmpty = true,
     ) {
     }
 

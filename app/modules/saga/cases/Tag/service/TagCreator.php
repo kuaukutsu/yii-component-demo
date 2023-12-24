@@ -12,11 +12,11 @@ use kuaukutsu\poc\demo\modules\saga\models\TagDto;
 use kuaukutsu\poc\demo\modules\saga\models\TagModel;
 use kuaukutsu\poc\demo\modules\saga\cases\Tag\handler\UuidFactory;
 
-final class TagCreator
+final readonly class TagCreator
 {
     public function __construct(
-        private readonly TagService $service,
-        private readonly UuidFactory $uuidFactory,
+        private TagService $service,
+        private UuidFactory $uuidFactory,
     ) {
     }
 

@@ -10,11 +10,11 @@ use kuaukutsu\poc\task\service\TaskCreator;
 use kuaukutsu\poc\task\TaskBuilder;
 use kuaukutsu\poc\demo\components\task\node\MainNode;
 
-final class TaskBuilderFactory
+final readonly class TaskBuilderFactory
 {
     public function __construct(
-        private readonly NodeServiceFactory $factory,
-        private readonly MainNode $mainNode,
+        private NodeServiceFactory $factory,
+        private MainNode $mainNode,
     ) {
     }
 

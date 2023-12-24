@@ -10,11 +10,11 @@ use kuaukutsu\poc\demo\shared\exception\NotFoundException;
 use kuaukutsu\poc\demo\modules\saga\cases\Tag\handler\UuidFactory;
 use kuaukutsu\poc\demo\modules\saga\service\TagService;
 
-final class TagDestroyer
+final readonly class TagDestroyer
 {
     public function __construct(
-        private readonly TagService $service,
-        private readonly UuidFactory $uuidFactory,
+        private TagService $service,
+        private UuidFactory $uuidFactory,
     ) {
     }
 
