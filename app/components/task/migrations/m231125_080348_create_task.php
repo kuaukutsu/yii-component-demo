@@ -4,6 +4,8 @@
 
 declare(strict_types=1);
 
+namespace kuaukutsu\poc\demo\components\task\migrations;
+
 use yii\base\NotSupportedException;
 use yii\db\Migration;
 
@@ -11,9 +13,9 @@ use yii\db\Migration;
  * @psalm-suppress PropertyNotSetInConstructor
  */
 // @phpcs:ignore
-final class m231125_080401_create_task_stage extends Migration
+final class m231125_080348_create_task extends Migration
 {
-    private string $table = '{{%task_stage}}';
+    private string $table = '{{%task}}';
 
     public function init(): void
     {
@@ -34,19 +36,21 @@ final class m231125_080401_create_task_stage extends Migration
                 'uuid' => $this->getDb()->getSchema()
                     ->createColumnSchemaBuilder('uuid')
                     ->notNull(),
-                'task_uuid' => $this->getDb()->getSchema()
-                    ->createColumnSchemaBuilder('uuid')
-                    ->notNull(),
+                'title' => $this->string(256)
+                    ->notNull()
+                    ->comment('Название'),
                 'flag' => $this->smallInteger()
                     ->defaultValue(0)
                     ->comment('Флаг состояния'),
                 'state' => $this->binary()
                     ->comment('Сериализованное представление текущего состояния'),
-                'handler' => $this->binary()
-                    ->comment('Сериализованное представление обработчика'),
-                'order' => $this->smallInteger()
-                    ->defaultValue(0)
-                    ->comment('Порядок в стеке'),
+                'options' => $this->getDb()->getSchema()
+                    ->createColumnSchemaBuilder('jsonb')
+                    ->defaultValue('{}')
+                    ->comment('TaskOptions'),
+                'checksum' => $this->char(32)
+                    ->notNull()
+                    ->comment('checksum'),
                 'created_at' => $this->timestamp()
                     ->notNull()
                     ->defaultExpression('CURRENT_TIMESTAMP'),
@@ -67,14 +71,19 @@ final class m231125_080401_create_task_stage extends Migration
         );
 
         $this->createIndex(
-            'UI_' . $tableName . '_task_flag',
+            'I_' . $tableName . '_checksum',
             $this->table,
             [
-                'task_uuid',
-                'flag',
-                'order',
+                'checksum',
             ],
-            true,
+        );
+
+        $this->createIndex(
+            'I_' . $tableName . '_flag',
+            $this->table,
+            [
+                'flag',
+            ]
         );
     }
 

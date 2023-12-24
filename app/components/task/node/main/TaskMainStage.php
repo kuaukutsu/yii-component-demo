@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace kuaukutsu\poc\demo\modules\task\models;
+namespace kuaukutsu\poc\demo\components\task\node\main;
 
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use kuaukutsu\poc\task\dto\StageModel;
+use kuaukutsu\poc\demo\components\task\components\behaviors\BinaryBehavior;
+use kuaukutsu\poc\demo\components\task\components\entity\EntityStageModel;
 use kuaukutsu\poc\demo\shared\validator\UuidModelValidator;
-use kuaukutsu\poc\demo\modules\task\components\BinaryBehavior;
 
 use function kuaukutsu\poc\task\tools\entity_hydrator;
 
@@ -27,11 +28,8 @@ use function kuaukutsu\poc\task\tools\entity_hydrator;
  *
  * @method array<string, int|string|array|null> toArray(array $fields = [], array $expand = [], $recursive = true)
  */
-final class TaskStage extends ActiveRecord
+final class TaskMainStage extends ActiveRecord implements EntityStageModel
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName(): string
     {
         return '{{%task_stage}}';

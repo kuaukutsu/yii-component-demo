@@ -2,25 +2,39 @@
 
 declare(strict_types=1);
 
-namespace kuaukutsu\poc\demo\modules\task\service;
+namespace kuaukutsu\poc\demo\components\task\service;
 
+use yii\db\ActiveRecord;
 use kuaukutsu\poc\task\dto\TaskModel;
 use kuaukutsu\poc\task\dto\TaskModelCreate;
 use kuaukutsu\poc\task\dto\TaskModelState;
 use kuaukutsu\poc\task\service\TaskCommand;
+use kuaukutsu\poc\task\state\TaskFlag;
 use kuaukutsu\poc\task\EntityUuid;
+use kuaukutsu\poc\demo\shared\entity\pk\PrimaryKeyInterface;
+use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidCreate;
+use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidUpdate;
 use kuaukutsu\poc\demo\shared\exception\ModelDeleteException;
 use kuaukutsu\poc\demo\shared\exception\ModelSaveException;
 use kuaukutsu\poc\demo\shared\exception\NotFoundException;
 use kuaukutsu\poc\demo\shared\utils\ModelOperationSafely;
-use kuaukutsu\poc\demo\shared\entity\pk\PrimaryKeyInterface;
-use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidCreate;
-use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidUpdate;
-use kuaukutsu\poc\demo\modules\task\models\Task;
 
-final class TaskService implements TaskCommand
+abstract class BaseTaskService implements TaskCommand
 {
     use ModelOperationSafely;
+
+    /**
+     * @throws NotFoundException
+     */
+    abstract protected function getOne(PrimaryKeyInterface $pk): ActiveRecord;
+
+    abstract protected function updateAll(array $attributes, array $condition, array $params = []): int;
+
+    /**
+     * @throws NotFoundException
+     * @throws ModelSaveException
+     */
+    abstract protected function save(PrimaryKeyInterface $pk, array $attributes): TaskModel;
 
     /**
      * @throws ModelSaveException
@@ -47,10 +61,12 @@ final class TaskService implements TaskCommand
 
     public function terminate(array $indexUuid, TaskModelState $model): bool
     {
-        $rows = Task::updateAll(
+        $flag = new TaskFlag();
+        $rows = $this->updateAll(
             $model->toArray(),
             [
                 'uuid' => $indexUuid,
+                'flag' => $flag->unset()->setRunning()->toValue(),
             ]
         );
 
@@ -68,33 +84,5 @@ final class TaskService implements TaskCommand
         );
 
         return $this->deleteSafely($model);
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws ModelSaveException
-     */
-    private function save(PrimaryKeyInterface $pk, array $attributes): TaskModel
-    {
-        $model = $pk->isNewRecord()
-            ? new Task($pk->getValue())
-            : $this->getOne($pk);
-
-        $model->setAttributes($attributes);
-        $this->saveSafely($model);
-        $model->refresh();
-
-        return $model->toDto();
-    }
-
-    /**
-     * @throws NotFoundException
-     */
-    private function getOne(PrimaryKeyInterface $pk): Task
-    {
-        return Task::findOne($pk->getValue())
-            ?? throw new NotFoundException(
-                strtr('[uuid] Task not found.', $pk->getValue())
-            );
     }
 }

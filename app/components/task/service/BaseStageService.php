@@ -2,25 +2,41 @@
 
 declare(strict_types=1);
 
-namespace kuaukutsu\poc\demo\modules\task\service;
+namespace kuaukutsu\poc\demo\components\task\service;
 
+use yii\db\ActiveRecord;
 use kuaukutsu\poc\task\dto\StageModel;
 use kuaukutsu\poc\task\dto\StageModelCreate;
 use kuaukutsu\poc\task\dto\StageModelState;
 use kuaukutsu\poc\task\service\StageCommand;
+use kuaukutsu\poc\task\state\TaskFlag;
 use kuaukutsu\poc\task\EntityUuid;
+use kuaukutsu\poc\demo\shared\entity\pk\PrimaryKeyInterface;
+use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidCreate;
+use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidUpdate;
 use kuaukutsu\poc\demo\shared\exception\ModelDeleteException;
 use kuaukutsu\poc\demo\shared\exception\ModelSaveException;
 use kuaukutsu\poc\demo\shared\exception\NotFoundException;
 use kuaukutsu\poc\demo\shared\utils\ModelOperationSafely;
-use kuaukutsu\poc\demo\shared\entity\pk\PrimaryKeyInterface;
-use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidCreate;
-use kuaukutsu\poc\demo\shared\entity\pk\PrimaryUuidUpdate;
-use kuaukutsu\poc\demo\modules\task\models\TaskStage;
 
-final class StageService implements StageCommand
+abstract class BaseStageService implements StageCommand
 {
     use ModelOperationSafely;
+
+    /**
+     * @throws NotFoundException
+     */
+    abstract protected function getOne(PrimaryKeyInterface $pk): ActiveRecord;
+
+    abstract protected function updateAll(array $attributes, array $condition, array $params = []): int;
+
+    abstract protected function deleteAll(array $condition, array $params = []): int;
+
+    /**
+     * @throws NotFoundException
+     * @throws ModelSaveException
+     */
+    abstract protected function save(PrimaryKeyInterface $pk, array $attributes): StageModel;
 
     /**
      * @throws ModelSaveException
@@ -45,12 +61,32 @@ final class StageService implements StageCommand
         );
     }
 
+    public function stateByTask(EntityUuid $uuid, StageModelState $model): bool
+    {
+        $flag = new TaskFlag();
+        $rows = $this->updateAll(
+            $model->toArray(),
+            [
+                'task_uuid' => $uuid->getUuid(),
+                'flag' => [
+                    $flag->unset()->setPaused()->toValue(),
+                    $flag->unset()->setRunning()->toValue(),
+                    $flag->unset()->setRunning()->setPaused()->toValue(),
+                ],
+            ]
+        );
+
+        return $rows > 0;
+    }
+
     public function terminateByTask(array $indexUuid, StageModelState $model): bool
     {
-        $rows = TaskStage::updateAll(
+        $flag = new TaskFlag();
+        $rows = $this->updateAll(
             $model->toArray(),
             [
                 'task_uuid' => $indexUuid,
+                'flag' => $flag->unset()->setRunning()->toValue(),
             ]
         );
 
@@ -60,11 +96,11 @@ final class StageService implements StageCommand
     /**
      * @throws ModelDeleteException
      */
-    public function removeByTask(EntityUuid $taskUuid): bool
+    public function removeByTask(EntityUuid $uuid): bool
     {
-        $rows = TaskStage::deleteAll(
+        $rows = $this->deleteAll(
             [
-                'task_uuid' => $taskUuid->getUuid(),
+                'task_uuid' => $uuid->getUuid(),
             ]
         );
 
@@ -82,33 +118,5 @@ final class StageService implements StageCommand
         );
 
         return $this->deleteSafely($model);
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws ModelSaveException
-     */
-    private function save(PrimaryKeyInterface $pk, array $attributes): StageModel
-    {
-        $model = $pk->isNewRecord()
-            ? new TaskStage($pk->getValue())
-            : $this->getOne($pk);
-
-        $model->setAttributes($attributes);
-        $this->saveSafely($model);
-        $model->refresh();
-
-        return $model->toDto();
-    }
-
-    /**
-     * @throws NotFoundException
-     */
-    private function getOne(PrimaryKeyInterface $pk): TaskStage
-    {
-        return TaskStage::findOne($pk->getValue())
-            ?? throw new NotFoundException(
-                strtr('[uuid] TaskStage not found.', $pk->getValue())
-            );
     }
 }

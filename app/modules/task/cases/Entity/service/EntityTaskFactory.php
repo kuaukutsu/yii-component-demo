@@ -4,18 +4,26 @@ declare(strict_types=1);
 
 namespace kuaukutsu\poc\demo\modules\task\cases\Entity\service;
 
+use Psr\Container\ContainerExceptionInterface;
 use kuaukutsu\poc\task\EntityTask;
 use kuaukutsu\poc\task\EntityWrapper;
 use kuaukutsu\poc\task\TaskBuilder;
 use kuaukutsu\poc\demo\components\identity\DomainIdentity;
+use kuaukutsu\poc\demo\components\task\TaskBuilderFactory;
 use kuaukutsu\poc\demo\modules\task\cases\Entity\task\EntityCreateStage;
 use kuaukutsu\poc\demo\modules\task\cases\Entity\task\EntityPromiseStage;
 use kuaukutsu\poc\demo\modules\task\cases\Entity\task\EntityReportStage;
 
 final class EntityTaskFactory
 {
-    public function __construct(private readonly TaskBuilder $builder)
+    private readonly TaskBuilder $builder;
+
+    /**
+     * @throws ContainerExceptionInterface
+     */
+    public function __construct(TaskBuilderFactory $factory)
     {
+        $this->builder = $factory->createByMain();
     }
 
     /**

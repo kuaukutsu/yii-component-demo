@@ -15,6 +15,8 @@ use kuaukutsu\poc\task\TaskManager;
 use kuaukutsu\poc\task\TaskManagerOptions;
 use kuaukutsu\poc\task\tools\TaskManagerOutput;
 
+use function kuaukutsu\poc\demo\argument;
+
 $dirname = dirname(__DIR__);
 
 require $dirname . '/vendor/autoload.php';
@@ -31,13 +33,16 @@ new yii\console\Application(
  * @noinspection PhpUnhandledExceptionInspection
  */
 $manager = Yii::$container->get(TaskManager::class);
-$manager->on(new TaskManagerOutput());
+/** @noinspection PhpUnhandledExceptionInspection */
+$manager->on(Yii::$container->get(TaskManagerOutput::class));
 /** @noinspection PhpUnhandledExceptionInspection */
 $manager->run(
     new TaskManagerOptions(
         bindir: __DIR__,
-        heartbeat: 5.,
-        keeperInterval: 1.,
-        handlerEndpoint: 'task.handler.php'
+        heartbeat: (float)argument('heartbeat', 5),
+        keeperInterval: (float)argument('keeper', 1),
+        queueSize: (int)argument('process', 10),
+        timeout: 172800,
+        handler: 'task.handler.php',
     )
 );

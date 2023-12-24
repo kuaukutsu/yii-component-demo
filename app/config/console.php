@@ -29,8 +29,8 @@ $config = [
             'class' => MigrateController::class,
             'migrationPath' => [
                 '@yii/rbac/migrations',
+                '@app/components/task/migrations',
                 '@app/modules/saga/migrations',
-                '@app/modules/task/migrations',
             ],
         ],
     ],

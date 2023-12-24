@@ -5,15 +5,23 @@ declare(strict_types=1);
 namespace kuaukutsu\poc\demo\modules\task\cases\Entity\service;
 
 use kuaukutsu\poc\demo\components\identity\DomainIdentity;
+use kuaukutsu\poc\demo\components\task\TaskViewerFactory;
 use kuaukutsu\poc\demo\modules\task\cases\Manage\dto\TaskDomainDto;
 use kuaukutsu\poc\task\service\TaskViewer;
+use Psr\Container\ContainerExceptionInterface;
 
 final class EntityDomainCreator
 {
+    private readonly TaskViewer $viewer;
+
+    /**
+     * @throws ContainerExceptionInterface
+     */
     public function __construct(
         private readonly EntityTaskFactory $taskFactory,
-        private readonly TaskViewer $viewer,
+        TaskViewerFactory $viewerFactory,
     ) {
+        $this->viewer = $viewerFactory->createByMain();
     }
 
     /**

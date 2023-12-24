@@ -6,7 +6,6 @@ namespace kuaukutsu\poc\demo\modules\task\cases\Entity\task;
 
 use kuaukutsu\poc\task\EntityWrapper;
 use kuaukutsu\poc\task\state\TaskStateInterface;
-use kuaukutsu\poc\task\state\TaskStateMessage;
 use kuaukutsu\poc\task\TaskBuilder;
 use kuaukutsu\poc\task\TaskHandlerBase;
 use kuaukutsu\poc\task\TaskStageContext;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace kuaukutsu\poc\demo\modules\task\components;
+namespace kuaukutsu\poc\demo\components\task\components\behaviors;
 
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
