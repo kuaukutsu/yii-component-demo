@@ -4,8 +4,6 @@
 
 declare(strict_types=1);
 
-namespace kuaukutsu\poc\demo\components\task\migrations;
-
 use yii\base\NotSupportedException;
 use yii\db\Migration;
 
