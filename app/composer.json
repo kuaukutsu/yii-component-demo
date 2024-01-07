@@ -40,7 +40,6 @@
   },
   "require-dev": {
     "ext-apcu": "*",
-    "ext-sync": "*",
     "vimeo/psalm": "^5.15",
     "friendsofphp/php-cs-fixer": "^3.13",
     "icanhazstring/composer-unused": "^0.8",
@@ -87,11 +86,6 @@
     "files": [
       "functions.php"
     ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "kuaukutsu\\poc\\demo\\tests\\": "tests"
-    }
   },
   "config": {
     "platform": {

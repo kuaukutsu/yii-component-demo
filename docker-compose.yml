@@ -3,9 +3,6 @@ version: '3.9'
 x-services-volume:
   &services-volume
   - type: bind
-    source: ./runtime/log
-    target: /src/log
-  - type: bind
     source: ./app
     target: /src/app
 
