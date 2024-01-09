@@ -61,10 +61,10 @@ final class TagCreate extends TransactionStepBase
     }
 
 
-    private function getSavedModel(): TagCreate
+    private function getSavedModel(): TagCreated
     {
         /**
-         * @var TagCreate
+         * @var TagCreated
          */
         return $this->current();
     }
